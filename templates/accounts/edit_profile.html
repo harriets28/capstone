@@ -4,25 +4,47 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <h2 class="mb-4">Edit Profile</h2>
-    <form method="post">
+<div class="auth-page">
+  <div class="auth-card" style="max-width: 520px;">
+
+    <div class="auth-header">
+      <h1 class="auth-title">Edit Profile</h1>
+      <p class="auth-subtitle">Update your public profile information.</p>
+    </div>
+
+    <form method="post" novalidate>
       {% csrf_token %}
-      {% for field in form %}
-        <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
-          {{ field }}
-          {% if field.errors %}
-            <div class="text-danger small mt-1">{{ field.errors }}</div>
-          {% endif %}
-        </div>
-      {% endfor %}
-      <div class="d-flex gap-3">
-        <button type="submit" class="btn btn-dark">Save Changes</button>
-        <a href="{% url 'accounts:profile' username=user.username %}" class="btn btn-outline-dark">Cancel</a>
+
+      <div class="auth-field">
+        <label class="auth-label">Bio</label>
+        <textarea name="bio" class="auth-input" rows="4" placeholder="Tell us about yourself...">{{ form.bio.value|default:'' }}</textarea>
+        {% if form.bio.errors %}
+          <div class="auth-field-error">{{ form.bio.errors|join:", " }}</div>
+        {% endif %}
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">Location</label>
+        <input type="text" name="location" class="auth-input" placeholder="e.g. London, UK" value="{{ form.location.value|default:'' }}" />
+        {% if form.location.errors %}
+          <div class="auth-field-error">{{ form.location.errors|join:", " }}</div>
+        {% endif %}
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">Website</label>
+        <input type="url" name="website" class="auth-input" placeholder="https://yourwebsite.com" value="{{ form.website.value|default:'' }}" />
+        {% if form.website.errors %}
+          <div class="auth-field-error">{{ form.website.errors|join:", " }}</div>
+        {% endif %}
+      </div>
+
+      <div class="d-flex gap-3 mt-3">
+        <button type="submit" class="auth-btn" style="width: auto; padding: .7rem 1.5rem;">Save Changes</button>
+        <a href="{% url 'accounts:profile' username=user.username %}" class="profile-edit-btn">Cancel</a>
       </div>
     </form>
+
   </div>
 </div>
 

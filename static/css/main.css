@@ -1085,3 +1085,92 @@ h4 {
 .auth-switch a {
     color: var(--terra);
 }
+
+/* ============================================================
+   Profile Page
+   ============================================================ */
+.profile-header-section {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 3.5rem 0 2.5rem;
+}
+
+.profile-header-inner {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.profile-avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--terra);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.35rem;
+}
+
+.profile-location {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.profile-bio {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    max-width: 50ch;
+    margin-bottom: 0.5rem;
+}
+
+.profile-website {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--terra);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.profile-edit-btn {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 0.5rem 1.1rem;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+}
+.profile-edit-btn:hover {
+    background: var(--ink);
+    color: white;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    font-style: italic;
+}
+.empty-state p {
+    margin-bottom: 1.5rem;
+}

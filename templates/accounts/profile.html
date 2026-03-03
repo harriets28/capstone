@@ -4,45 +4,68 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="col-md-3">
-    <div class="card p-3 mb-4">
-      <h4>{{ profile_user.username }}</h4>
-      {% if profile_user.profile.location %}
-        <p class="text-muted small">📍 {{ profile_user.profile.location }}</p>
-      {% endif %}
-      {% if profile_user.profile.bio %}
-        <p>{{ profile_user.profile.bio }}</p>
-      {% endif %}
-      {% if profile_user.profile.website %}
-        <a href="{{ profile_user.profile.website }}" target="_blank">{{ profile_user.profile.website }}</a>
-      {% endif %}
-      {% if user == profile_user %}
-        <a href="{% url 'accounts:edit_profile' %}" class="btn btn-dark btn-sm mt-3">Edit Profile</a>
-      {% endif %}
+<!-- Profile Header -->
+<div class="profile-header-section">
+  <div class="container px-4">
+    <div class="profile-header-inner">
+      <div class="profile-avatar-circle">
+        {{ profile_user.username|first|upper }}
+      </div>
+      <div class="profile-info">
+        <h1 class="profile-name">{{ profile_user.username }}</h1>
+        {% if profile_user.profile.location %}
+          <p class="profile-location">📍 {{ profile_user.profile.location }}</p>
+        {% endif %}
+        {% if profile_user.profile.bio %}
+          <p class="profile-bio">{{ profile_user.profile.bio }}</p>
+        {% endif %}
+        {% if profile_user.profile.website %}
+          <a href="{{ profile_user.profile.website }}" target="_blank" class="profile-website">
+            🔗 {{ profile_user.profile.website }}
+          </a>
+        {% endif %}
+        {% if user == profile_user %}
+          <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn">Edit Profile</a>
+        {% endif %}
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="col-md-9">
-    <h3>Liked Stories</h3>
-    {% if liked_posts %}
-      <div class="row">
-        {% for like in liked_posts %}
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">{{ like.post.title }}</h5>
-              <p class="text-muted small">📍 {{ like.post.destination }}</p>
-              <a href="{{ like.post.get_absolute_url }}" class="btn btn-dark btn-sm">Read Story</a>
+<!-- Liked Stories -->
+<div class="container px-4 pb-5">
+  <div class="section-header">
+    <h2 class="section-title">Liked Stories</h2>
+  </div>
+
+  {% if liked_posts %}
+    <div class="stories-grid">
+      {% for like in liked_posts %}
+      <article class="story-card">
+        <a href="{{ like.post.get_absolute_url }}">
+          <div class="story-card-body">
+            {% if like.post.category %}
+              <span class="story-category-tag">{{ like.post.category.name }}</span>
+            {% endif %}
+            <p class="story-dest">📍 {{ like.post.destination }}</p>
+            <h3 class="story-title">{{ like.post.title }}</h3>
+            <p class="story-excerpt">{{ like.post.excerpt }}</p>
+            <div class="story-meta">
+              <span>❤️ {{ like.post.like_count }}</span>
+              <span>💬 {{ like.post.comment_count }}</span>
+              <time>{{ like.post.created_at|date:"M j, Y" }}</time>
             </div>
           </div>
-        </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p class="text-muted">No liked stories yet.</p>
-    {% endif %}
-  </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>No liked stories yet.</p>
+      <a href="/posts/" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Browse Stories</a>
+    </div>
+  {% endif %}
 </div>
 
 {% endblock %}
