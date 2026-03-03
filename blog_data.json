@@ -1,0 +1,177 @@
+[
+{
+  "model": "blog.category",
+  "pk": 2,
+  "fields": {
+    "name": "Europe",
+    "slug": "europe"
+  }
+},
+{
+  "model": "blog.category",
+  "pk": 3,
+  "fields": {
+    "name": "Asia",
+    "slug": "asia"
+  }
+},
+{
+  "model": "blog.category",
+  "pk": 4,
+  "fields": {
+    "name": "Americas",
+    "slug": "americas"
+  }
+},
+{
+  "model": "blog.category",
+  "pk": 5,
+  "fields": {
+    "name": "Africa",
+    "slug": "africa"
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 2,
+  "fields": {
+    "title": "Lost in the Streets of Kyoto",
+    "slug": "lost-in-the-streets-of-kyoto",
+    "author": 1,
+    "category": 3,
+    "destination": "Kyoto, Japan",
+    "excerpt": "Among ancient temples and bamboo groves, Kyoto moves at a pace the modern world seems to have forgotten.",
+    "content": "There is a moment, usually just after dawn, when Kyoto belongs entirely to itself.\r\n\r\nThe tourists haven't arrived yet. The temple gates are half-lit by a pale morning sun filtering through cedar and cypress. A monk sweeps the same stone path he has swept every morning for thirty years. The smell of incense drifts from somewhere you cannot quite locate.\r\n\r\nKyoto is Japan's contradiction — a city of extraordinary modernity that has chosen, deliberately and carefully, to remember. The Gion district preserves its wooden machiya townhouses not as a museum piece but as a living neighbourhood. Geiko still walk these streets in the evenings, their wooden geta clicking against cobblestone.\r\n\r\nThe Fushimi Inari shrine demands a full morning. Ten thousand vermillion torii gates climb the forested hillside behind the main shrine complex, each one donated by a business or individual seeking fortune. Walk far enough up the trail and the crowds fall away entirely, leaving you alone among the gates and the birdsong.\r\n\r\nDon't leave without spending an afternoon in Arashiyama. The bamboo grove is every bit as extraordinary as the photographs suggest — though the photographs never quite capture the sound of it, the deep, woody creak of the stalks in the wind, the way the light filters green through hundreds of feet of canopy above you.",
+    "status": "published",
+    "created_at": "2026-03-03T11:53:21.348Z",
+    "featured": false
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 3,
+  "fields": {
+    "title": "The Road to Patagonia",
+    "slug": "the-road-to-patagonia",
+    "author": 1,
+    "category": 4,
+    "destination": "Torres del Paine, Chile",
+    "excerpt": "At the end of the world, the mountains don't care about you. That's exactly the point.",
+    "content": "The bus from Puerto Natales takes three hours on a road that transitions slowly from scrubland to something that feels genuinely prehistoric. By the time Torres del Paine's granite towers appear on the horizon, you understand why people travel twelve thousand miles to stand here.\r\n\r\nPatagonia is not a place that flatters you. The wind is indifferent and constant — a horizontal force that leans against you all day and fills your ears with white noise. The weather changes in minutes. A cloudless morning can become a horizontal sleet storm by afternoon with no warning whatsoever.\r\n\r\nThe W Trek takes most hikers four to five days. You sleep in refugios or camp beneath skies so thick with stars that the Milky Way casts a visible shadow. The trail passes the Grey Glacier, where ice the colour of old glass calves slowly into a pewter lake. It climbs to the Mirador Las Torres at dawn, where the three iconic spires catch the first light in shades of amber and rose.\r\n\r\nGo in November or March if you can. The summer months bring crowds and sold-out refugios. The shoulder seasons give you the park almost to yourself, and the light at the end of the austral summer is extraordinary — long golden evenings that last until ten o'clock.",
+    "status": "published",
+    "created_at": "2026-03-03T11:54:03.527Z",
+    "featured": false
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 4,
+  "fields": {
+    "title": "Santorini After the Crowds Leave",
+    "slug": "santorini-after-the-crowds-leave",
+    "author": 1,
+    "category": 2,
+    "destination": "Santorini, Greece",
+    "excerpt": "Everyone knows Santorini. Almost nobody sees the version that exists once the cruise ships have gone.",
+    "content": "The cruise ships arrive at ten and leave at six. In between, the clifftop villages of Oia and Fira are genuinely difficult to move through — a solid mass of selfie sticks and matching linen sets pointed at the famous blue domes.\r\n\r\nBut Santorini at seven in the evening is a different island entirely.\r\n\r\nStay for at least five nights and you will find it. The narrow alleys of Oia empty out. The restaurants that were impossible to book at nine fill with locals and long-term visitors. The sunset, which has been photographed perhaps more than any other sunset on earth, happens in something approaching peace.\r\n\r\nThe island's volcanic history is everywhere if you look for it. The black and red sand beaches at Perissa and Kamari exist because Santorini is essentially the collapsed rim of a massive volcanic caldera. Swimming in the caldera itself, off the boat from Fira, you float in water heated by underwater thermal vents.\r\n\r\nHire a car for a day and drive the interior. Away from the clifftop villages, Santorini is agricultural and quiet — vineyards growing the native Assyrtiko grape in low basket-trained vines that protect the fruit from the wind. The wine is mineral and sharp and unlike anything produced anywhere else.",
+    "status": "published",
+    "created_at": "2026-03-03T11:54:49.593Z",
+    "featured": false
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 5,
+  "fields": {
+    "title": "One Week in Oaxaca",
+    "slug": "one-week-in-oaxaca",
+    "author": 1,
+    "category": 4,
+    "destination": "Oaxaca, Mexico",
+    "excerpt": "Mexico's most compelling food city is also one of its most beautiful, built from green volcanic stone in the shadow of the Sierra Norte.",
+    "content": "Oaxaca is built from a green volcanic stone called cantera verde that glows in the afternoon light like something from a fairy tale. The city's colonial centre is compact enough to walk entirely, its streets lined with churches, markets, and mezcal bars in roughly equal measure.\r\n\r\nThe food here is the reason most people come and the reason most people stay longer than they planned. Oaxacan cuisine is one of the most complex and regional in Mexico — seven distinct mole sauces, tlayudas the size of hubcaps, chapulines (roasted grasshoppers) sold by the bag in the Benito Juárez market, memelas and tetelas and enfrijoladas. Eat at Mercado 20 de Noviembre for the full experience: choose your meat from the vendors at the entrance, then take it to the comal section to be cooked over charcoal.\r\n\r\nThe mezcal culture is serious and fascinating. Unlike tequila, mezcal is still largely produced by small family distilleries using traditional clay pot stills. Visit a palenque outside the city to see the process — the roasting of the agave hearts in underground pits, the grinding by stone tahona, the slow fermentation in wooden vats. The result tastes of smoke and earth and something that is genuinely irreplaceable.\r\n\r\nTake a day trip to Monte Albán, the ancient Zapotec city built on a levelled mountaintop above the valley. Arrive early and walk the great plaza as the morning mist clears from the surrounding mountains.",
+    "status": "published",
+    "created_at": "2026-03-03T11:55:26.628Z",
+    "featured": true
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 6,
+  "fields": {
+    "title": "Morocco in Five Days",
+    "slug": "morocco-in-five-days",
+    "author": 1,
+    "category": 5,
+    "destination": "Marrakech, Morocco",
+    "excerpt": "Five days is not enough. It is also exactly the right amount of time to fall completely in love with a place.",
+    "content": "Marrakech disorients you immediately and completely. The medina is a medieval city that has been continuously inhabited for nearly a thousand years, and it shows — a labyrinth of souks and derbs (private alleyways) that no map adequately represents. Get lost in it deliberately on your first afternoon. The getting lost is the point.\r\n\r\nThe Djemaa el-Fna square transforms itself across the day. In the morning it is a car park. By noon the orange juice vendors and tooth pullers have arrived. By evening it is one of the great theatrical spectacles on earth — acrobats, storytellers, musicians, snake charmers, and food stalls sending smoke into a sky that has turned the colour of a blood orange.\r\n\r\nStay in a riad in the medina if your budget allows. These inward-facing courtyard houses are Marrakech's great architectural achievement — entirely plain and unassuming from the street, they open into cool tiled courtyards with fountains and citrus trees and a silence that feels impossible given the noise of the streets outside.\r\n\r\nDay trips from Marrakech are excellent. The Ourika Valley, an hour south in the foothills of the Atlas Mountains, offers a completely different Morocco — Berber villages on steep hillsides, walnut groves, a river running cold and clear from the snowpack above. Hire a guide in the valley who knows the walking trails.",
+    "status": "published",
+    "created_at": "2026-03-03T11:56:18.597Z",
+    "featured": true
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 7,
+  "fields": {
+    "title": "Slow Travel in the Italian Lakes",
+    "slug": "slow-travel-in-the-italian-lakes",
+    "author": 1,
+    "category": 2,
+    "destination": "Lake Como, Italy",
+    "excerpt": "The Italian lakes reward the visitor who resists the urge to rush — who takes the slow ferry, lingers over lunch, and lets the afternoon disappear.",
+    "content": "The fast way to see Lake Como is to take a day trip from Milan, photograph the famous villas from the ferry, and return to the city by evening. Many people do this. They see Como. But they don't really experience it.\r\n\r\nThe slow way is to stay for four or five nights in one of the smaller lake towns — Varenna or Bellagio on the central lake, Menaggio on the western shore — and let the rhythm of the lake impose itself on your days.\r\n\r\nThe ferries here are a pleasure in themselves. The slow boats stop at every village, and there are dozens of them: Cadenabbia, Tremezzo, Lenno, Argegno. Each has its own small harbour, its own cluster of pastel-painted houses climbing the steep hillside behind, its own bar on the waterfront where the locals gather in the early evening.\r\n\r\nWalk the Greenway del Lago di Como between Colonno and Cadenabbia — a lakeside footpath that passes through gardens and olive groves with the water always visible below. Stop at the Villa del Balbianello, whose terraced gardens on a wooded promontory are perhaps the most beautiful in Italy. \r\n\r\nEat simply and well. The lake fish — missoltino, lavarello, agoni — are caught locally and prepared with restraint. The local Lago di Como olive oil is exceptional. The wine from the steep Valtellina vineyards to the north, made from the Nebbiolo grape grown on near-vertical terraces, is serious and underappreciated.",
+    "status": "published",
+    "created_at": "2026-03-03T11:56:59.125Z",
+    "featured": true
+  }
+},
+{
+  "model": "blog.like",
+  "pk": 3,
+  "fields": {
+    "post": 7,
+    "user": 1,
+    "created_at": "2026-03-03T12:16:12.409Z"
+  }
+},
+{
+  "model": "blog.like",
+  "pk": 4,
+  "fields": {
+    "post": 4,
+    "user": 1,
+    "created_at": "2026-03-03T12:43:36.256Z"
+  }
+},
+{
+  "model": "blog.like",
+  "pk": 5,
+  "fields": {
+    "post": 3,
+    "user": 2,
+    "created_at": "2026-03-03T13:30:46.377Z"
+  }
+},
+{
+  "model": "blog.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "bio": "",
+    "location": "",
+    "website": ""
+  }
+},
+{
+  "model": "blog.userprofile",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "bio": "",
+    "location": "",
+    "website": ""
+  }
+}
+]
