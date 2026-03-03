@@ -51,6 +51,15 @@
           <span class="text-muted" style="font-size: .8rem;">{{ comment.created_at|date:"M j, Y" }}</span>
         </div>
         <p class="mb-0">{{ comment.body }}</p>
+    {% if user == comment.author %}
+        <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}" class="d-inline">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-link btn-sm text-danger p-0 mt-1"
+      onclick="return confirm('Delete this comment?')">
+      Delete
+    </button>
+  </form>
+{% endif %}
       </div>
       {% endfor %}
     {% else %}

@@ -100,3 +100,12 @@ def toggle_like(request, slug):
         'liked': liked,
         'like_count': post.like_count,
     })
+
+@login_required
+@require_POST
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, author=request.user)
+    post_slug = comment.post.slug
+    comment.delete()
+    messages.success(request, 'Comment deleted.')
+    return redirect('blog:post_detail', slug=post_slug)

@@ -9,4 +9,5 @@ urlpatterns = [
     path('posts/<slug:slug>/', views.post_detail, name='post_detail'),
     path('posts/<slug:slug>/like/', views.toggle_like, name='toggle_like'),
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
+    path('comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
 ]
