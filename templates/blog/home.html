@@ -4,10 +4,61 @@
 
 {% block content %}
 
-<div class="container px-4">
-  <div class="section-header mt-5">
-    <h2 class="section-title">Latest Stories</h2>
-    <a href="/posts/" class="section-link">View all</a>
+<!-- Parallax Hero -->
+<section class="parallax-hero" id="hero">
+  <div class="parallax-bg" id="parallax-bg"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <p class="hero-label">A Travel Journal</p>
+    <h1 class="hero-title">Wanderlust</h1>
+    <p class="hero-excerpt">Stories from the edges of the world. Destinations explored slowly, written honestly.</p>
+    <a href="/posts/" class="hero-btn">Explore Stories →</a>
+  </div>
+</section>
+
+<!-- Featured Posts Row -->
+{% if featured_posts|length > 1 %}
+<section class="featured-strip">
+  <div class="container px-4">
+    <div class="featured-grid">
+      {% for post in featured_posts|slice:"1:" %}
+      <article class="featured-card">
+        <a href="{{ post.get_absolute_url }}">
+          <div class="featured-card-body">
+            {% if post.category %}
+              <span class="featured-label">{{ post.category.name }}</span>
+            {% endif %}
+            <h3 class="featured-card-title">{{ post.title }}</h3>
+            <p class="featured-card-dest">📍 {{ post.destination }}</p>
+            <p class="featured-card-excerpt">{{ post.excerpt }}</p>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Category Pills -->
+{% if categories %}
+<div class="category-bar">
+  <div class="container px-4">
+    <div class="category-scroll">
+      <a href="/posts/" class="category-pill category-pill--all">All Destinations</a>
+      {% for cat in categories %}
+        <a href="{{ cat.get_absolute_url }}" class="category-pill">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Recent Stories -->
+<section class="container px-4 pb-5">
+  <div class="section-header">
+    <h2 class="section-title">Recent Stories</h2>
+    <a href="/posts/" class="section-link">View all →</a>
   </div>
 
   {% if recent_posts %}
@@ -17,7 +68,7 @@
       <a href="{{ post.get_absolute_url }}">
         <div class="story-card-body">
           {% if post.category %}
-            <span class="badge bg-secondary mb-2" style="font-family: var(--font-ui); font-size: .7rem;">{{ post.category.name }}</span>
+            <span class="story-category-tag">{{ post.category.name }}</span>
           {% endif %}
           <p class="story-dest">📍 {{ post.destination }}</p>
           <h3 class="story-title">{{ post.title }}</h3>
@@ -33,8 +84,21 @@
     {% endfor %}
   </div>
   {% else %}
-    <p class="text-muted mt-4">No stories yet. Check back soon.</p>
+    <p class="text-muted">No stories yet.</p>
   {% endif %}
-</div>
+</section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Parallax effect on scroll
+  const parallaxBg = document.getElementById('parallax-bg');
+  if (parallaxBg) {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      parallaxBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+    }, { passive: true });
+  }
+</script>
 {% endblock %}

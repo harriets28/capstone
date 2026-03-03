@@ -388,3 +388,288 @@ h4 {
     outline: 2px solid var(--terra);
     outline-offset: 3px;
 }
+
+/* ============================================================
+   Parallax Hero
+   ============================================================ */
+.parallax-hero {
+    position: relative;
+    height: 92vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.parallax-bg {
+    position: absolute;
+    inset: -30% 0 -30% 0;
+    background-image: url("https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+}
+
+.parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(26, 22, 18, 0.92) 0%,
+        rgba(26, 22, 18, 0.4) 50%,
+        rgba(26, 22, 18, 0.1) 100%
+    );
+}
+
+.parallax-content {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 4rem;
+    max-width: 780px;
+    color: white;
+}
+
+.hero-label {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c49a3c;
+    border: 1px solid #c49a3c;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-destination {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+}
+
+.hero-excerpt {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 55ch;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.hero-btn {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 0.65rem 1.5rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+.hero-btn:hover {
+    background: white;
+    color: var(--ink);
+}
+
+/* ============================================================
+   Featured Strip
+   ============================================================ */
+.featured-strip {
+    background: var(--ink);
+    padding: 0;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.featured-card {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+.featured-card:last-child {
+    border-right: none;
+}
+
+.featured-card a {
+    display: block;
+    padding: 1.75rem;
+    transition: background 0.2s;
+}
+.featured-card a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.featured-label {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c49a3c;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.featured-card-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+}
+
+.featured-card-dest {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.4rem;
+}
+
+.featured-card-excerpt {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ============================================================
+   Category Bar
+   ============================================================ */
+.category-bar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 0;
+}
+
+.category-scroll {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+}
+.category-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.category-pill {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    color: var(--ink-soft);
+    background: var(--white);
+    transition: all 0.2s;
+}
+.category-pill:hover,
+.category-pill--all {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: white;
+}
+
+/* ============================================================
+   Section Header
+   ============================================================ */
+.section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 2.5rem 0 1.25rem;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 1.75rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.section-link {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--terra);
+    font-weight: 500;
+}
+
+/* ============================================================
+   Story Cards — improved
+   ============================================================ */
+.story-category-tag {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--terra);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.story-meta {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.story-meta time {
+    margin-left: auto;
+}
+
+/* ============================================================
+   Improved Navigation
+   ============================================================ */
+.site-nav {
+    background: rgba(255, 252, 248, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+    .parallax-content {
+        padding: 2rem 1.5rem;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+    .featured-card {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+}
