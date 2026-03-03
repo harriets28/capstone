@@ -1,5 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Post, Category
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from .models import Post, Category, Comment, Like
+from .forms import CommentForm
 
 
 def home(request):
@@ -59,3 +64,20 @@ def category_detail(request, slug):
         'posts': posts,
     }
     return render(request, 'blog/category_detail.html', context)
+
+@login_required
+@require_POST
+def toggle_like(request, slug):
+    post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
+    like, created = Like.objects.get_or_create(post=post, user=request.user)
+
+    if not created:
+        like.delete()
+        liked = False
+    else:
+        liked = True
+
+    return JsonResponse({
+        'liked': liked,
+        'like_count': post.like_count,
+    })
