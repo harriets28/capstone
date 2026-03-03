@@ -1,32 +1,40 @@
-{% extends 'base.html' %} {% block title %}Wanderlust — Travel Blog{% endblock%}
+{% extends 'base.html' %}
+
+{% block title %}Wanderlust — Travel Blog{% endblock %}
+
 {% block content %}
 
-<h1 class="mb-4">Travel Stories</h1>
+<div class="container px-4">
+  <div class="section-header mt-5">
+    <h2 class="section-title">Latest Stories</h2>
+    <a href="/posts/" class="section-link">View all</a>
+  </div>
 
-{% if recent_posts %}
-<div class="row">
+  {% if recent_posts %}
+  <div class="stories-grid">
     {% for post in recent_posts %}
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                {% if post.category %}
-                <span class="badge bg-secondary mb-2"
-                    >{{ post.category.name }}</span
-                >
-                {% endif %}
-                <h5 class="card-title">{{ post.title }}</h5>
-                <p class="text-muted small">📍 {{ post.destination }}</p>
-                <p class="card-text">{{ post.excerpt }}</p>
-                <a
-                    href="{{ post.get_absolute_url }}"
-                    class="btn btn-dark btn-sm"
-                    >Read Story</a
-                >
-            </div>
+    <article class="story-card">
+      <a href="{{ post.get_absolute_url }}">
+        <div class="story-card-body">
+          {% if post.category %}
+            <span class="badge bg-secondary mb-2" style="font-family: var(--font-ui); font-size: .7rem;">{{ post.category.name }}</span>
+          {% endif %}
+          <p class="story-dest">📍 {{ post.destination }}</p>
+          <h3 class="story-title">{{ post.title }}</h3>
+          <p class="story-excerpt">{{ post.excerpt }}</p>
+          <div class="story-meta">
+            <span>❤️ {{ post.like_count }}</span>
+            <span>💬 {{ post.comment_count }}</span>
+            <time>{{ post.created_at|date:"M j, Y" }}</time>
+          </div>
         </div>
-    </div>
+      </a>
+    </article>
     {% endfor %}
+  </div>
+  {% else %}
+    <p class="text-muted mt-4">No stories yet. Check back soon.</p>
+  {% endif %}
 </div>
-{% else %}
-<p>No stories yet.</p>
-{% endif %} {% endblock %}
+
+{% endblock %}
