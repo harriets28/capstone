@@ -6,7 +6,6 @@ from django.http import JsonResponse
 from .models import Post, Category, Comment, Like
 from .forms import CommentForm
 
-
 def home(request):
     featured_posts = Post.objects.filter(
         status=Post.STATUS_PUBLISHED, featured=True
@@ -50,11 +49,31 @@ def post_list(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
+    comments = post.comments.filter(approved=True)
+    comment_form = CommentForm()
+    user_has_liked = post.is_liked_by(request.user)
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            messages.warning(request, 'Please log in to leave a comment.')
+            return redirect('login')
+
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            messages.success(request, 'Your comment has been posted!')
+            return redirect('blog:post_detail', slug=slug)
+
     context = {
         'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
+        'user_has_liked': user_has_liked,
     }
     return render(request, 'blog/post_detail.html', context)
-
 
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
