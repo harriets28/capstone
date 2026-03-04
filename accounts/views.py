@@ -39,12 +39,24 @@ def profile_view(request, username):
     return render(request, 'accounts/profile.html', context)
 
 
+import cloudinary.uploader
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
-            form.save()
+            profile = form.save(commit=False)
+            if 'avatar' in request.FILES:
+                upload_result = cloudinary.uploader.upload(
+                    request.FILES['avatar'],
+                    folder='wanderlust/avatars',
+                    transformation=[
+                        {'width': 300, 'height': 300, 'crop': 'fill', 'gravity': 'face'}
+                    ]
+                )
+                profile.avatar = upload_result['secure_url']
+            profile.save()
             messages.success(request, 'Profile updated!')
             return redirect('accounts:profile', username=request.user.username)
     else:

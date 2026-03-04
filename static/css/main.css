@@ -1174,3 +1174,38 @@ h4 {
 .empty-state p {
     margin-bottom: 1.5rem;
 }
+
+/* ============================================================
+   Profile — Centered Layout
+   ============================================================ */
+.profile-header-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.profile-avatar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--line);
+    margin-bottom: 1rem;
+}
+
+.profile-header-centered .profile-avatar-circle {
+    margin-bottom: 1rem;
+}
+
+.profile-header-centered .profile-name {
+    margin-bottom: 0.25rem;
+}
+
+.profile-header-centered .profile-bio {
+    max-width: 45ch;
+    text-align: center;
+}

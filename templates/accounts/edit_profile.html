@@ -12,9 +12,22 @@
       <p class="auth-subtitle">Update your public profile information.</p>
     </div>
 
-    <form method="post" novalidate>
-      {% csrf_token %}
+    <form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
 
+  <div class="auth-field">
+    <label class="auth-label">Profile Picture</label>
+    {% if form.instance.avatar %}
+      <div class="mb-2">
+        <img src="{{ form.instance.avatar }}" alt="Current avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
+        <p class="auth-help">Current photo — upload a new one to replace it</p>
+      </div>
+    {% endif %}
+    <input type="file" name="avatar" class="auth-input" accept="image/*" />
+    {% if form.avatar.errors %}
+      <div class="auth-field-error">{{ form.avatar.errors|join:", " }}</div>
+    {% endif %}
+  </div>
       <div class="auth-field">
         <label class="auth-label">Bio</label>
         <textarea name="bio" class="auth-input" rows="4" placeholder="Tell us about yourself...">{{ form.bio.value|default:'' }}</textarea>

@@ -7,30 +7,30 @@
 <!-- Profile Header -->
 <div class="profile-header-section">
   <div class="container px-4">
-    <div class="profile-header-inner">
-      <div class="profile-avatar-circle">
-        {{ profile_user.username|first|upper }}
-      </div>
-      <div class="profile-info">
-        <h1 class="profile-name">{{ profile_user.username }}</h1>
-        {% if profile_user.profile.location %}
-          <p class="profile-location">📍 {{ profile_user.profile.location }}</p>
-        {% endif %}
-        {% if profile_user.profile.favourite_destination %}
-         <p class="profile-location">⭐ Favourite: {{ profile_user.profile.favourite_destination }}</p>
-        {% endif %}
-        {% if profile_user.profile.bio %}
-          <p class="profile-bio">{{ profile_user.profile.bio }}</p>
-        {% endif %}
-        {% if profile_user.profile.instagram %}
+    <div class="profile-header-centered">
+      {% if profile_user.profile.avatar %}
+        <img src="{{ profile_user.profile.avatar }}" alt="{{ profile_user.username }}" class="profile-avatar-img" />
+      {% else %}
+        <div class="profile-avatar-circle">{{ profile_user.username|first|upper }}</div>
+      {% endif %}
+      <h1 class="profile-name">{{ profile_user.username }}</h1>
+      {% if profile_user.profile.location %}
+        <p class="profile-location">📍 {{ profile_user.profile.location }}</p>
+      {% endif %}
+      {% if profile_user.profile.favourite_destination %}
+        <p class="profile-location">⭐ Favourite: {{ profile_user.profile.favourite_destination }}</p>
+      {% endif %}
+      {% if profile_user.profile.bio %}
+        <p class="profile-bio">{{ profile_user.profile.bio }}</p>
+      {% endif %}
+      {% if profile_user.profile.instagram %}
         <a href="https://instagram.com/{{ profile_user.profile.instagram|cut:'@' }}" target="_blank" class="profile-website">
-        📸 {{ profile_user.profile.instagram }}
-         </a>
-        {% endif %}
-        {% if user == profile_user %}
-          <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn">Edit Profile</a>
-        {% endif %}
-      </div>
+          📸 {{ profile_user.profile.instagram }}
+        </a>
+      {% endif %}
+      {% if user == profile_user %}
+        <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn" style="margin-top: 1rem;">Edit Profile</a>
+      {% endif %}
     </div>
   </div>
 </div>
