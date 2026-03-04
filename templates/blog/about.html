@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}About — Wanderlust{% endblock %}
+
+{% block content %}
+
+<!-- About Hero -->
+<div class="about-hero">
+  <div class="container px-4">
+    <div class="about-hero-inner">
+      <p class="hero-label">About</p>
+      <h1 class="about-title">Stories from the edges of the world.</h1>
+      <p class="about-intro">Wanderlust is a travel journal dedicated to slow, honest travel writing. No sponsored content. No listicles. Just stories from the places we've been lucky enough to visit.</p>
+    </div>
+  </div>
+</div>
+
+<!-- About Content -->
+<div class="container px-4">
+  <div class="about-body">
+
+    <div class="about-section">
+      <h2 class="about-section-title">What is Wanderlust?</h2>
+      <p>Wanderlust started as a personal travel journal and grew into a community of writers sharing stories from around the world. We believe the best travel writing doesn't just describe a place — it captures how a place makes you feel, what it teaches you, and why it stays with you long after you've left.</p>
+      <p>Every story on this site is written by someone who has actually been there — who has navigated the confusion of an unfamiliar city, eaten the food, got lost, found something unexpected, and come home changed.</p>
+    </div>
+
+    <div class="about-section">
+      <h2 class="about-section-title">How it works</h2>
+      <p>Stories are published by our team of writers and contributors. Registered members can like stories, leave comments, and build a personal wishlist of destinations they'd love to visit. Profiles are public so you can see what other travellers are reading and dreaming about.</p>
+    </div>
+
+    <div class="about-section">
+      <h2 class="about-section-title">Join the community</h2>
+      <p>Create a free account to like stories, leave comments, and save destinations to your travel wishlist. We'd love to have you.</p>
+      <div class="about-cta">
+        {% if user.is_authenticated %}
+          <a href="/posts/" class="btn-primary">Browse Stories</a>
+        {% else %}
+          <a href="{% url 'accounts:register' %}" class="btn-primary">Create an Account</a>
+          <a href="/posts/" class="btn-outline" style="margin-left: 1rem;">Browse Stories</a>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

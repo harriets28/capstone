@@ -86,6 +86,9 @@ def category_detail(request, slug):
     }
     return render(request, 'blog/category_detail.html', context)
 
+def about(request):
+    return render(request, 'blog/about.html')
+
 @login_required
 @require_POST
 def toggle_like(request, slug):
