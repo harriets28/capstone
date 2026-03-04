@@ -39,7 +39,7 @@
         {% endif %}
       </div>
 
-      <div class="auth-field">
+      <div class="auth-field" style="margin-bottom: 2rem;">
         <label class="auth-label">Instagram</label>
         <input type="text" name="instagram" class="auth-input" placeholder="@username" value="{{ form.instagram.value|default:'' }}" />
         {% if form.instagram.errors %}
@@ -47,10 +47,10 @@
         {% endif %}
       </div>
 
-      <div class="d-flex gap-3 mt-3">
-        <button type="submit" class="auth-btn" style="width: auto; padding: .7rem 1.5rem;">Save Changes</button>
-        <a href="{% url 'accounts:profile' username=user.username %}" class="profile-edit-btn">Cancel</a>
-      </div>
+      <div class="d-flex gap-3 mt-3 align-items-center">
+        <button type="submit" class="auth-btn" style="width: auto; padding: .7rem 1.5rem; margin-top: 0;">Save Changes</button>
+        <a href="{% url 'accounts:profile' username=user.username %}" class="profile-edit-btn" style="margin-top: 0; padding: .7rem 1.5rem;">Cancel</a>
+    </div>
     </form>
 
   </div>
