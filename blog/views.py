@@ -49,6 +49,8 @@ def post_list(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
+    post.view_count += 1
+    post.save(update_fields=['view_count'])
     comments = post.comments.filter(approved=True)
     comment_form = CommentForm()
     user_has_liked = post.is_liked_by(request.user)
