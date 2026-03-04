@@ -78,6 +78,14 @@
       {% endif %}
     </div>
 
+    <!-- Share Button -->
+<div class="like-wrap" style="border-top: none; padding-top: 0;">
+  <button id="share-btn" class="like-btn">
+    <span>🔗</span>
+    <span id="share-text">Share this story</span>
+  </button>
+</div>
+
     <div class="author-card">
       <div class="author-avatar">{{ post.author.username|first|upper }}</div>
       <div class="author-info">
@@ -211,5 +219,22 @@ function toggleEditForm(commentId) {
   const form = document.getElementById('edit-form-' + commentId);
   form.style.display = form.style.display === 'none' ? 'block' : 'none';
 }
+
+// Share button
+const shareBtn = document.getElementById('share-btn');
+if (shareBtn) {
+  shareBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const textEl = document.getElementById('share-text');
+      textEl.textContent = 'Link copied!';
+      shareBtn.classList.add('like-btn--liked');
+      setTimeout(() => {
+        textEl.textContent = 'Share this story';
+        shareBtn.classList.remove('like-btn--liked');
+      }, 2000);
+    });
+  });
+}
+
 </script>
 {% endblock %}
