@@ -99,15 +99,25 @@
                 <time class="comment-time">{{ comment.created_at|date:"M j, Y" }}</time>
               </div>
               <p class="comment-text">{{ comment.body }}</p>
-              {% if user == comment.author %}
-                <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}">
-                  {% csrf_token %}
-                  <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">
-                    Delete
-                  </button>
-                </form>
-              {% endif %}
-            </div>
+             {% if user == comment.author %}
+            <div class="comment-actions">
+                <button class="comment-edit-toggle" onclick="toggleEditForm({{ comment.pk }})">Edit</button>
+                <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}" class="d-inline">
+            {% csrf_token %}
+             <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">Delete</button>
+            </form>
+        </div>
+  <div class="comment-edit-form" id="edit-form-{{ comment.pk }}" style="display:none;">
+    <form method="post" action="{% url 'blog:edit_comment' comment_id=comment.pk %}">
+      {% csrf_token %}
+      <textarea class="form-control mt-2" name="body" rows="3">{{ comment.body }}</textarea>
+      <div class="d-flex gap-2 mt-2">
+        <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
+        <button type="button" class="comment-delete" onclick="toggleEditForm({{ comment.pk }})">Cancel</button>
+      </div>
+    </form>
+  </div>
+{% endif %}
           </div>
           {% endfor %}
         </div>
@@ -190,5 +200,10 @@
       }
     });
   }
+
+function toggleEditForm(commentId) {
+  const form = document.getElementById('edit-form-' + commentId);
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
 </script>
 {% endblock %}

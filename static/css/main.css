@@ -1267,3 +1267,30 @@ h4 {
 .about-cta {
     margin-top: 1.5rem;
 }
+
+/* ============================================================
+   Comment Edit
+   ============================================================ */
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.25rem;
+}
+
+.comment-edit-toggle {
+    background: none;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+.comment-edit-toggle:hover {
+    color: var(--terra);
+}
+
+.comment-edit-form {
+    margin-top: 0.5rem;
+}

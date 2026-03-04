@@ -11,5 +11,6 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('posts/<slug:slug>/wishlist/', views.toggle_wishlist, name='toggle_wishlist'),
     path('comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    path('comments/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),
     path('about/', views.about, name='about'),
 ]

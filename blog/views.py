@@ -116,6 +116,19 @@ def delete_comment(request, comment_id):
     return redirect('blog:post_detail', slug=post_slug)
 
 @login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id, author=request.user)
+    if request.method == 'POST':
+        body = request.POST.get('body', '').strip()
+        if len(body) >= 3:
+            comment.body = body
+            comment.save()
+            messages.success(request, 'Comment updated.')
+        else:
+            messages.error(request, 'Comment is too short.')
+    return redirect('blog:post_detail', slug=comment.post.slug)
+
+@login_required
 @require_POST
 def toggle_wishlist(request, slug):
     post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
