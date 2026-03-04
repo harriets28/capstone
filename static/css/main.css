@@ -1329,3 +1329,34 @@ h4 {
 .story-card:hover .story-card-img img {
     transform: scale(1.03);
 }
+
+/* ============================================================
+   Back to Top Button
+   ============================================================ */
+#back-to-top {
+    display: none;
+    position: fixed !important;
+    bottom: 2rem !important;
+    right: 2rem !important;
+    left: auto !important;
+    width: 44px !important;
+    max-width: 44px !important;
+    height: 44px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+#back-to-top:hover {
+    background: var(--terra);
+    transform: translateY(-3px);
+}
