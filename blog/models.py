@@ -69,6 +69,10 @@ class Post(models.Model):
             return self.likes.filter(user=user).exists()
         return False
 
+    def is_wishlisted_by(self, user):
+        if user.is_authenticated:
+            return self.wishlists.filter(user=user).exists()
+        return False
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -104,3 +108,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'Profile of {self.user.username}'
+
+class Wishlist(models.Model):
+    """Represents a post saved to a user's travel wishlist."""
+    
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='wishlists')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlists')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'user')
+
+    def __str__(self):
+        return f'{self.user.username} wishlisted "{self.post.title}"'

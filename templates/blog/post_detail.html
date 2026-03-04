@@ -4,7 +4,6 @@
 
 {% block content %}
 
-<!-- Post Header -->
 <div class="post-header-section">
   <div class="container px-4">
     <div class="post-header-inner">
@@ -27,14 +26,12 @@
   </div>
 </div>
 
-<!-- Divider -->
 <div class="post-divider">
   <div class="container px-4">
     <div class="divider-line"></div>
   </div>
 </div>
 
-<!-- Post Body -->
 <div class="container px-4">
   <div class="post-body-wrap">
 
@@ -42,7 +39,6 @@
       {{ post.content|linebreaks }}
     </div>
 
-    <!-- Like Button -->
     <div class="like-wrap">
       {% if user.is_authenticated %}
         <button
@@ -60,7 +56,22 @@
       {% endif %}
     </div>
 
-    <!-- Author Card -->
+    <div class="like-wrap" style="border-top: none; padding-top: 0;">
+      {% if user.is_authenticated %}
+        <button
+          id="wishlist-btn"
+          class="like-btn {% if user_has_wishlisted %}like-btn--liked{% endif %}"
+          data-url="{% url 'blog:toggle_wishlist' slug=post.slug %}">
+          <span>🗺️</span>
+          <span id="wishlist-text">{% if user_has_wishlisted %}Saved to Wishlist{% else %}Add to Wishlist{% endif %}</span>
+        </button>
+      {% else %}
+        <a href="{% url 'login' %}" class="like-btn like-btn--guest">
+          🗺️ <span>Sign in to save to wishlist</span>
+        </a>
+      {% endif %}
+    </div>
+
     <div class="author-card">
       <div class="author-avatar">{{ post.author.username|first|upper }}</div>
       <div class="author-info">
@@ -74,7 +85,6 @@
       </div>
     </div>
 
-    <!-- Comments -->
     <section class="comments-section" id="comments">
       <h2 class="comments-title">{{ post.comment_count }} Comment{{ post.comment_count|pluralize }}</h2>
 
@@ -90,7 +100,7 @@
               </div>
               <p class="comment-text">{{ comment.body }}</p>
               {% if user == comment.author %}
-                <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}" class="d-inline">
+                <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}">
                   {% csrf_token %}
                   <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">
                     Delete
@@ -122,6 +132,7 @@
           <a href="{% url 'login' %}?next={{ request.path }}">Sign in</a> to leave a comment.
         </p>
       {% endif %}
+
     </section>
 
   </div>
@@ -151,6 +162,31 @@
         countEl.textContent = data.like_count;
       } catch (err) {
         console.error('Like toggle failed:', err);
+      }
+    });
+  }
+
+  const wishlistBtn = document.getElementById('wishlist-btn');
+  if (wishlistBtn) {
+    wishlistBtn.addEventListener('click', async () => {
+      const url = wishlistBtn.dataset.url;
+      const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'X-CSRFToken': csrf, 'Content-Type': 'application/json' },
+        });
+        const data = await response.json();
+        const textEl = document.getElementById('wishlist-text');
+        if (data.wishlisted) {
+          wishlistBtn.classList.add('like-btn--liked');
+          textEl.textContent = 'Saved to Wishlist';
+        } else {
+          wishlistBtn.classList.remove('like-btn--liked');
+          textEl.textContent = 'Add to Wishlist';
+        }
+      } catch (err) {
+        console.error('Wishlist toggle failed:', err);
       }
     });
   }

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from .models import Post, Category, Comment, Like
+from .models import Post, Category, Comment, Like, Wishlist 
 from .forms import CommentForm
 
 def home(request):
@@ -52,6 +52,7 @@ def post_detail(request, slug):
     comments = post.comments.filter(approved=True)
     comment_form = CommentForm()
     user_has_liked = post.is_liked_by(request.user)
+    user_has_wishlisted = post.is_wishlisted_by(request.user)
 
     if request.method == 'POST':
         if not request.user.is_authenticated:
@@ -72,6 +73,7 @@ def post_detail(request, slug):
         'comments': comments,
         'comment_form': comment_form,
         'user_has_liked': user_has_liked,
+        'user_has_wishlisted': user_has_wishlisted,
     }
     return render(request, 'blog/post_detail.html', context)
 
@@ -109,3 +111,21 @@ def delete_comment(request, comment_id):
     comment.delete()
     messages.success(request, 'Comment deleted.')
     return redirect('blog:post_detail', slug=post_slug)
+
+@login_required
+@require_POST
+def toggle_wishlist(request, slug):
+    post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
+    from .models import Wishlist
+    wishlist_item, created = Wishlist.objects.get_or_create(post=post, user=request.user)
+
+    if not created:
+        wishlist_item.delete()
+        wishlisted = False
+    else:
+        wishlisted = True
+
+    return JsonResponse({
+        'wishlisted': wishlisted,
+        'wishlist_count': post.wishlists.count(),
+    })

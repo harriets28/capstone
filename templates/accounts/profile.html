@@ -66,6 +66,41 @@
       <a href="/posts/" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Browse Stories</a>
     </div>
   {% endif %}
+
+  <!-- Wishlist -->
+<div class="container px-4 pb-5">
+  <div class="section-header">
+    <h2 class="section-title">🗺️ Travel Wishlist</h2>
+  </div>
+
+  {% if wishlisted_posts %}
+    <div class="stories-grid">
+      {% for item in wishlisted_posts %}
+      <article class="story-card">
+        <a href="{{ item.post.get_absolute_url }}">
+          <div class="story-card-body">
+            {% if item.post.category %}
+              <span class="story-category-tag">{{ item.post.category.name }}</span>
+            {% endif %}
+            <p class="story-dest">📍 {{ item.post.destination }}</p>
+            <h3 class="story-title">{{ item.post.title }}</h3>
+            <p class="story-excerpt">{{ item.post.excerpt }}</p>
+            <div class="story-meta">
+              <span>❤️ {{ item.post.like_count }}</span>
+              <span>💬 {{ item.post.comment_count }}</span>
+              <time>{{ item.post.created_at|date:"M j, Y" }}</time>
+            </div>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>No posts on your wishlist yet.</p>
+      <a href="/posts/" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Browse Stories</a>
+    </div>
+  {% endif %}
 </div>
 
 {% endblock %}

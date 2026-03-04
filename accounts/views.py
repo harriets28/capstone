@@ -28,9 +28,13 @@ def profile_view(request, username):
     liked_posts = profile_user.likes.select_related('post').filter(
         post__status='published'
     )
+    wishlisted_posts = profile_user.wishlists.select_related('post').filter(
+        post__status='published'
+    )
     context = {
         'profile_user': profile_user,
         'liked_posts': liked_posts,
+        'wishlisted_posts': wishlisted_posts,
     }
     return render(request, 'accounts/profile.html', context)
 
