@@ -22,10 +22,10 @@
         {% if profile_user.profile.bio %}
           <p class="profile-bio">{{ profile_user.profile.bio }}</p>
         {% endif %}
-        {% if profile_user.profile.website %}
-          <a href="{{ profile_user.profile.website }}" target="_blank" class="profile-website">
-            🔗 {{ profile_user.profile.website }}
-          </a>
+        {% if profile_user.profile.instagram %}
+        <a href="https://instagram.com/{{ profile_user.profile.instagram|cut:'@' }}" target="_blank" class="profile-website">
+        📸 {{ profile_user.profile.instagram }}
+         </a>
         {% endif %}
         {% if user == profile_user %}
           <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn">Edit Profile</a>

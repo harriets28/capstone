@@ -29,7 +29,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['bio', 'location', 'website']
+        fields = ['bio', 'location', 'favourite_destination', 'instagram']
         widgets = {
             'bio': forms.Textarea(attrs={
                 'rows': 4,
@@ -40,12 +40,12 @@ class ProfileUpdateForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'e.g. London, UK'
             }),
-             'favourite_destination': forms.TextInput(attrs={
+            'favourite_destination': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'e.g. Kyoto, Japan'
             }),
-            'website': forms.URLInput(attrs={
+            'instagram': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'https://yourwebsite.com'
+                'placeholder': 'e.g. @username'
             }),
         }
