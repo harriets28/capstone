@@ -40,6 +40,10 @@ class ProfileUpdateForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'e.g. London, UK'
             }),
+             'favourite_destination': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'e.g. Kyoto, Japan'
+            }),
             'website': forms.URLInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'https://yourwebsite.com'

@@ -105,6 +105,7 @@ class UserProfile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=100, blank=True)
     website = models.URLField(blank=True)
+    favourite_destination = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'Profile of {self.user.username}'

@@ -16,6 +16,9 @@
         {% if profile_user.profile.location %}
           <p class="profile-location">📍 {{ profile_user.profile.location }}</p>
         {% endif %}
+        {% if profile_user.profile.favourite_destination %}
+         <p class="profile-location">⭐ Favourite: {{ profile_user.profile.favourite_destination }}</p>
+        {% endif %}
         {% if profile_user.profile.bio %}
           <p class="profile-bio">{{ profile_user.profile.bio }}</p>
         {% endif %}
