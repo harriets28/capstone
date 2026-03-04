@@ -15,11 +15,11 @@
     <form method="post" enctype="multipart/form-data" novalidate>
   {% csrf_token %}
 
-  <div class="auth-field">
+  <div class="auth-field" style="text-align: center;">
     <label class="auth-label">Profile Picture</label>
     {% if form.instance.avatar %}
       <div class="mb-2">
-        <img src="{{ form.instance.avatar }}" alt="Current avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
+       <img src="{{ form.instance.avatar }}" alt="Current avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 0.5rem;" />
         <p class="auth-help">Current photo — upload a new one to replace it</p>
       </div>
     {% endif %}
