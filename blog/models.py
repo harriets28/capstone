@@ -41,6 +41,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_DRAFT)
     created_at = models.DateTimeField(auto_now_add=True)
     featured = models.BooleanField(default=False)
+    cover_image = models.URLField(blank=True)
 
     class Meta:
         ordering = ['-created_at']
