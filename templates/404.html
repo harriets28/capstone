@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found — Wanderlust{% endblock %}
+
+{% block content %}
+<div class="about-hero" style="min-height: 60vh; display: flex; align-items: center;">
+  <div class="container px-4">
+    <div class="about-hero-inner">
+      <p class="hero-label">404</p>
+      <h1 class="about-title">You seem to be lost.</h1>
+      <p class="about-intro">The page you're looking for doesn't exist — it may have moved or never existed at all. A bit like that shortcut through the medina that seemed like a good idea at the time.</p>
+      <div class="about-cta" style="margin-top: 2rem;">
+        <a href="/" class="hero-btn" style="color: white; border-color: white;">Back to Home</a>
+        <a href="/posts/" class="hero-btn" style="color: white; border-color: white; margin-left: 1rem;">Browse Stories</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

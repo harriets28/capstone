@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Server Error — Wanderlust{% endblock %}
+
+{% block content %}
+<div class="about-hero" style="min-height: 60vh; display: flex; align-items: center;">
+  <div class="container px-4">
+    <div class="about-hero-inner">
+      <p class="hero-label">500</p>
+      <h1 class="about-title">Something went wrong.</h1>
+      <p class="about-intro">We've hit an unexpected error on our end. Our team has been notified. In the meantime, head back home and carry on exploring.</p>
+      <div class="about-cta" style="margin-top: 2rem;">
+        <a href="/" class="hero-btn" style="color: white; border-color: white;">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

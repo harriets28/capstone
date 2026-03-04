@@ -14,3 +14,8 @@ urlpatterns = [
     path('comments/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),
     path('about/', views.about, name='about'),
 ]
+
+from django.views.defaults import page_not_found
+urlpatterns += [
+    path('404/', lambda request: page_not_found(request, None)),
+]
