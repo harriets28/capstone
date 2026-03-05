@@ -24,6 +24,7 @@ def register(request):
 
 
 def profile_view(request, username):
+    from blog.models import Comment
     profile_user = get_object_or_404(User, username=username)
     liked_posts = profile_user.likes.select_related('post').filter(
         post__status='published'
@@ -31,10 +32,18 @@ def profile_view(request, username):
     wishlisted_posts = profile_user.wishlists.select_related('post').filter(
         post__status='published'
     )
+    comments = Comment.objects.filter(
+        author=profile_user, approved=True, parent=None
+    ).select_related('post').order_by('-created_at')[:10]
+
     context = {
         'profile_user': profile_user,
         'liked_posts': liked_posts,
         'wishlisted_posts': wishlisted_posts,
+        'comments': comments,
+        'liked_count': liked_posts.count(),
+        'wishlist_count': wishlisted_posts.count(),
+        'comment_count': comments.count(),
     }
     return render(request, 'accounts/profile.html', context)
 

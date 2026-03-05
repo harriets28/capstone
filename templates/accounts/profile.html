@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
+{% block main_class %}has-parallax-hero{% endblock %}
+
 {% block title %}{{ profile_user.username }} — Wanderlust{% endblock %}
 
 {% block content %}
 
-<!-- Profile Header -->
 <div class="profile-header-section">
   <div class="container px-4">
     <div class="profile-header-centered">
@@ -13,34 +14,58 @@
       {% else %}
         <div class="profile-avatar-circle">{{ profile_user.username|first|upper }}</div>
       {% endif %}
+
       <h1 class="profile-name">{{ profile_user.username }}</h1>
+
       {% if profile_user.profile.location %}
         <p class="profile-location">📍 {{ profile_user.profile.location }}</p>
       {% endif %}
-      {% if profile_user.profile.favourite_destination %}
-        <p class="profile-location">⭐ Favourite: {{ profile_user.profile.favourite_destination }}</p>
-      {% endif %}
+
       {% if profile_user.profile.bio %}
         <p class="profile-bio">{{ profile_user.profile.bio }}</p>
       {% endif %}
+
+      <p class="profile-member-since">Member since {{ profile_user.date_joined|date:"F Y" }}</p>
+
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <span class="profile-stat-number">{{ liked_count }}</span>
+          <span class="profile-stat-label">Liked</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-number">{{ wishlist_count }}</span>
+          <span class="profile-stat-label">Wishlist</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-number">{{ comment_count }}</span>
+          <span class="profile-stat-label">Comments</span>
+        </div>
+        <button class="scroll-hint" onclick="document.getElementById('profile-content').scrollIntoView({behavior: 'smooth'})">↓</button>
+      </div>
+
+      {% if profile_user.profile.favourite_destination %}
+        <p class="profile-location">⭐ Favourite: {{ profile_user.profile.favourite_destination }}</p>
+      {% endif %}
+
       {% if profile_user.profile.instagram %}
         <a href="https://instagram.com/{{ profile_user.profile.instagram|cut:'@' }}" target="_blank" class="profile-website">
           📸 {{ profile_user.profile.instagram }}
         </a>
       {% endif %}
+
       {% if user == profile_user %}
-        <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn" style="margin-top: 1rem;">Edit Profile</a>
+        <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn">Edit Profile</a>
       {% endif %}
     </div>
   </div>
 </div>
 
-<!-- Liked Stories -->
-<div class="container px-4 pb-5">
+<div class="container px-4 pb-5" id="profile-content">
+
+  <!-- Liked Stories -->
   <div class="section-header">
     <h2 class="section-title">Liked Stories</h2>
   </div>
-
   {% if liked_posts %}
     <div class="stories-grid">
       {% for like in liked_posts %}
@@ -71,11 +96,9 @@
   {% endif %}
 
   <!-- Wishlist -->
-<div class="container px-4 pb-5">
-  <div class="section-header">
+  <div class="section-header" style="margin-top: 3rem;">
     <h2 class="section-title">🗺️ Travel Wishlist</h2>
   </div>
-
   {% if wishlisted_posts %}
     <div class="stories-grid">
       {% for item in wishlisted_posts %}
@@ -104,6 +127,29 @@
       <a href="/posts/" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Browse Stories</a>
     </div>
   {% endif %}
+
+  <!-- Comment History -->
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2 class="section-title">💬 Comment History</h2>
+  </div>
+  {% if comments %}
+    <div class="comments-history">
+      {% for comment in comments %}
+      <div class="comment-history-item">
+        <div class="comment-history-meta">
+          <a href="{{ comment.post.get_absolute_url }}" class="comment-history-post">{{ comment.post.title }}</a>
+          <time class="comment-time">{{ comment.created_at|date:"M j, Y" }}</time>
+        </div>
+        <p class="comment-history-body">{{ comment.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>No comments yet.</p>
+    </div>
+  {% endif %}
+
 </div>
 
 {% endblock %}
