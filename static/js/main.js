@@ -24,3 +24,13 @@ document.querySelectorAll(".alert-toast").forEach((toast) => {
         setTimeout(() => toast.remove(), 400);
     }, 5000);
 });
+
+// ---- Mobile menu ----
+const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+const navLinks = document.querySelector(".nav-links");
+if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("open");
+        mobileMenuBtn.textContent = isOpen ? "Close" : "Menu";
+    });
+}
