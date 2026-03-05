@@ -8,12 +8,9 @@ from .forms import CommentForm
 from django.urls import reverse
 
 def home(request):
-    featured_posts = Post.objects.filter(
-        status=Post.STATUS_PUBLISHED, featured=True
-    )[:3]
-    recent_posts = Post.objects.filter(
-        status=Post.STATUS_PUBLISHED
-    ).exclude(featured=True)[:6]
+    all_published = Post.objects.filter(status=Post.STATUS_PUBLISHED)
+    featured_posts = all_published.order_by('?').distinct()[:3]
+    recent_posts = all_published.order_by('-created_at')[:6]
     categories = Category.objects.all()
 
     context = {
