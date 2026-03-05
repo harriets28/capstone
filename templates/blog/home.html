@@ -45,9 +45,9 @@
 <div class="category-bar">
   <div class="container px-4">
     <div class="category-scroll">
-      <a href="/posts/" class="category-pill category-pill--all">All Destinations</a>
+      <a href="{% url 'blog:post_list' %}" class="category-pill category-pill--all">All Destinations</a>
       {% for cat in categories %}
-        <a href="{{ cat.get_absolute_url }}" class="category-pill">{{ cat.name }}</a>
+        <a href="{% url 'blog:post_list' %}?category={{ cat.slug }}" class="category-pill">{{ cat.name }}</a>
       {% endfor %}
     </div>
   </div>
@@ -66,6 +66,14 @@
     {% for post in recent_posts %}
     <article class="story-card">
       <a href="{{ post.get_absolute_url }}">
+        <article class="story-card">
+    <a href="{{ post.get_absolute_url }}">
+    {% if post.cover_image %}
+      <div class="story-card-img">
+        <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+      </div>
+    {% endif %}
+    <div class="story-card-body">
         <div class="story-card-body">
           {% if post.category %}
             <span class="story-category-tag">{{ post.category.name }}</span>
