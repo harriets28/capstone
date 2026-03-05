@@ -2,9 +2,15 @@
 const nav = document.querySelector(".site-nav");
 if (nav) {
     function updateNav() {
-        nav.classList.toggle("scrolled", window.scrollY > 50);
+        const isScrolled = window.scrollY > 50;
+        nav.classList.toggle("scrolled", isScrolled);
         nav.style.boxShadow =
             window.scrollY > 10 ? "0 2px 16px rgba(26,22,18,.08)" : "none";
+
+        const hasHero = document.querySelector(".parallax-hero");
+        if (hasHero) {
+            nav.classList.toggle("on-hero", !isScrolled);
+        }
     }
     window.addEventListener("scroll", updateNav, { passive: true });
     updateNav();

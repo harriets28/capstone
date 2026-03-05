@@ -314,10 +314,11 @@ h4 {
     position: absolute;
     inset: 0;
     background: linear-gradient(
-        to top,
-        rgba(26, 22, 18, 0.92) 0%,
-        rgba(26, 22, 18, 0.4) 50%,
-        rgba(26, 22, 18, 0.1) 100%
+        to bottom,
+        rgba(26, 22, 18, 0.4) 0%,
+        rgba(26, 22, 18, 0.1) 20%,
+        rgba(26, 22, 18, 0.1) 50%,
+        rgba(26, 22, 18, 0.92) 100%
     );
 }
 
@@ -388,6 +389,16 @@ h4 {
 
 main.has-parallax-hero {
     padding-top: 0;
+}
+
+.has-parallax-hero .site-nav:not(.scrolled) .nav-link,
+.has-parallax-hero .site-nav:not(.scrolled) .nav-brand {
+    color: white;
+}
+
+.site-nav.on-hero .nav-link,
+.site-nav.on-hero .nav-brand {
+    color: white;
 }
 
 /* ============================================================
