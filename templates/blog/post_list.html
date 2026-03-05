@@ -22,20 +22,20 @@
   <div class="container px-4">
     <div class="d-flex gap-3 align-items-center flex-wrap">
       <form method="get" class="d-flex gap-2 flex-grow-1" style="max-width: 480px;">
-        <input
-          type="search"
-          name="q"
-          value="{{ search_query }}"
-          class="form-control"
-          placeholder="Search destinations, titles..."
-          style="border-radius: 3px; border: 1px solid var(--line); font-family: var(--font-ui); font-size: .88rem;"
-        />
-        <button type="submit" class="btn-primary" style="white-space: nowrap; padding: .6rem 1.25rem;">Search</button>
+      <input
+  type="search"
+  name="q"
+  value="{{ search_query }}"
+  class="form-control"
+  placeholder="Search destinations, titles..."
+  style="border-radius: 20px; border: 1px solid var(--line); font-family: var(--font-ui); font-size: .88rem; height: 38px;"
+/>
+        <button type="submit" class="btn-primary" style="white-space: nowrap; padding: .45rem 1rem; font-size: 0.82rem; font-weight: 500; border-radius: 20px; height: 38px;">Search</button>
       </form>
       <div class="category-scroll" style="flex: 1;">
-        <a href="{% url 'blog:post_list' %}" class="category-pill {% if not request.GET.category %}category-pill--all{% endif %}">All</a>
+       <a href="{% url 'blog:post_list' %}#stories" class="category-pill {% if not request.GET.category %}category-pill--all{% endif %}">All</a>
         {% for cat in categories %}
-          <a href="{% url 'blog:post_list' %}?category={{ cat.slug }}" class="category-pill {% if request.GET.category == cat.slug %}category-pill--all{% endif %}">{{ cat.name }}</a>
+        <a href="{% url 'blog:post_list' %}?category={{ cat.slug }}#stories" class="category-pill {% if request.GET.category == cat.slug %}category-pill--all{% endif %}">{{ cat.name }}</a>
         {% endfor %}
       </div>
     </div>
@@ -43,7 +43,7 @@
 </div>
 
 <!-- Stories Grid -->
-<section class="container px-4 pb-5">
+<section class="container px-4 pb-5" id="stories">
   {% if search_query %}
     <p class="text-muted mt-4 mb-0" style="font-family: var(--font-ui); font-size: .88rem;">
       Showing results for <strong>"{{ search_query }}"</strong>
