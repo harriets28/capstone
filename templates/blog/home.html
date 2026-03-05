@@ -58,7 +58,7 @@
 <section class="container px-4 pb-5">
   <div class="section-header">
     <h2 class="section-title">Recent Stories</h2>
-    <a href="/posts/" class="section-link">View all →</a>
+    <a href="{% url 'blog:post_list' %}" class="section-link">View all →</a>
   </div>
 
   {% if recent_posts %}
@@ -66,14 +66,11 @@
     {% for post in recent_posts %}
     <article class="story-card">
       <a href="{{ post.get_absolute_url }}">
-        <article class="story-card">
-    <a href="{{ post.get_absolute_url }}">
-    {% if post.cover_image %}
-      <div class="story-card-img">
-        <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
-      </div>
-    {% endif %}
-    <div class="story-card-body">
+        {% if post.cover_image %}
+          <div class="story-card-img">
+            <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+          </div>
+        {% endif %}
         <div class="story-card-body">
           {% if post.category %}
             <span class="story-category-tag">{{ post.category.name }}</span>
