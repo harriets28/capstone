@@ -33,12 +33,6 @@
 </div>
 {% endif %}
 
-<div class="post-divider">
-  <div class="container px-4">
-    <div class="divider-line"></div>
-  </div>
-</div>
-
 <div class="container px-4">
   <div class="post-body-wrap">
 
@@ -79,13 +73,12 @@
       {% endif %}
     </div>
 
-    <!-- Share Button -->
-<div class="like-wrap" style="border-top: none; padding-top: 0;">
-  <button id="share-btn" class="like-btn">
-    <span>🔗</span>
-    <span id="share-text">Share this story</span>
-  </button>
-</div>
+    <div class="like-wrap" style="border-top: none; padding-top: 0;">
+      <button id="share-btn" class="like-btn">
+        <span>🔗</span>
+        <span id="share-text">Share this story</span>
+      </button>
+    </div>
 
     <div class="author-card">
       <div class="author-avatar">{{ post.author.username|first|upper }}</div>
@@ -114,25 +107,78 @@
                 <time class="comment-time">{{ comment.created_at|date:"M j, Y" }}</time>
               </div>
               <p class="comment-text">{{ comment.body }}</p>
-             {% if user == comment.author %}
-            <div class="comment-actions">
+
+              {% if user == comment.author %}
+              <div class="comment-actions">
                 <button class="comment-edit-toggle" onclick="toggleEditForm({{ comment.pk }})">Edit</button>
                 <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}" class="d-inline">
-            {% csrf_token %}
-             <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">Delete</button>
-            </form>
-        </div>
-  <div class="comment-edit-form" id="edit-form-{{ comment.pk }}" style="display:none;">
-    <form method="post" action="{% url 'blog:edit_comment' comment_id=comment.pk %}">
-      {% csrf_token %}
-      <textarea class="form-control mt-2" name="body" rows="3">{{ comment.body }}</textarea>
-      <div class="d-flex gap-2 mt-2">
-        <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
-        <button type="button" class="comment-delete" onclick="toggleEditForm({{ comment.pk }})">Cancel</button>
-      </div>
-    </form>
-  </div>
-{% endif %}
+                  {% csrf_token %}
+                  <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">Delete</button>
+                </form>
+              </div>
+              <div class="comment-edit-form" id="edit-form-{{ comment.pk }}" style="display:none;">
+                <form method="post" action="{% url 'blog:edit_comment' comment_id=comment.pk %}">
+                  {% csrf_token %}
+                  <textarea class="form-control mt-2" name="body" rows="3">{{ comment.body }}</textarea>
+                  <div class="d-flex gap-2 mt-2">
+                    <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
+                    <button type="button" class="comment-delete" onclick="toggleEditForm({{ comment.pk }})">Cancel</button>
+                  </div>
+                </form>
+              </div>
+              {% endif %}
+
+              {% if user.is_authenticated %}
+              <button class="comment-reply-toggle" onclick="toggleReplyForm({{ comment.pk }})">↩ Reply</button>
+              <div class="reply-form" id="reply-form-{{ comment.pk }}" style="display:none;">
+                <form method="post" action="{% url 'blog:add_reply' comment_id=comment.pk %}">
+                  {% csrf_token %}
+                  <textarea class="form-control mt-2" name="body" rows="2" placeholder="Write a reply..."></textarea>
+                  <div class="d-flex gap-2 mt-2">
+                    <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Post Reply</button>
+                    <button type="button" class="comment-delete" onclick="toggleReplyForm({{ comment.pk }})">Cancel</button>
+                  </div>
+                </form>
+              </div>
+              {% endif %}
+
+              {% if comment.replies.all %}
+              <div class="replies-list">
+                {% for reply in comment.replies.all %}
+                <div class="comment reply" id="comment-{{ reply.pk }}">
+                  <div class="comment-avatar" style="width:30px; height:30px; font-size:0.75rem;">{{ reply.author.username|first|upper }}</div>
+                  <div class="comment-body">
+                    <div class="comment-header">
+                      <strong class="comment-author">{{ reply.author.username }}</strong>
+                      <time class="comment-time">{{ reply.created_at|date:"M j, Y" }}</time>
+                    </div>
+                    <p class="comment-text">{{ reply.body }}</p>
+                   {% if user == reply.author %}
+<div class="comment-actions">
+  <button class="comment-edit-toggle" onclick="toggleEditForm('reply-{{ reply.pk }}')">Edit</button>
+  <form method="post" action="{% url 'blog:delete_comment' comment_id=reply.pk %}" class="d-inline">
+    {% csrf_token %}
+    <button type="submit" class="comment-delete" onclick="return confirm('Delete this reply?')">Delete</button>
+  </form>
+</div>
+                    <div class="comment-edit-form" id="edit-form-reply-{{ reply.pk }}" style="display:none;">
+  <form method="post" action="{% url 'blog:edit_comment' comment_id=reply.pk %}">
+    {% csrf_token %}
+    <textarea class="form-control mt-2" name="body" rows="2">{{ reply.body }}</textarea>
+    <div class="d-flex gap-2 mt-2">
+      <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
+      <button type="button" class="comment-delete" onclick="toggleEditForm('reply-{{ reply.pk }}')">Cancel</button>
+    </div>
+  </form>
+</div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% endif %}
+
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -160,7 +206,7 @@
 
     </section>
 
-  </div>
+  </div> 
 </div>
 
 {% endblock %}
@@ -218,26 +264,29 @@
     });
   }
 
-function toggleEditForm(commentId) {
-  const form = document.getElementById('edit-form-' + commentId);
-  form.style.display = form.style.display === 'none' ? 'block' : 'none';
-}
+  function toggleEditForm(commentId) {
+    const form = document.getElementById('edit-form-' + commentId);
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
 
-// Share button
-const shareBtn = document.getElementById('share-btn');
-if (shareBtn) {
-  shareBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      const textEl = document.getElementById('share-text');
-      textEl.textContent = 'Link copied!';
-      shareBtn.classList.add('like-btn--liked');
-      setTimeout(() => {
-        textEl.textContent = 'Share this story';
-        shareBtn.classList.remove('like-btn--liked');
-      }, 2000);
+  function toggleReplyForm(commentId) {
+    const form = document.getElementById('reply-form-' + commentId);
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const textEl = document.getElementById('share-text');
+        textEl.textContent = 'Link copied!';
+        shareBtn.classList.add('like-btn--liked');
+        setTimeout(() => {
+          textEl.textContent = 'Share this story';
+          shareBtn.classList.remove('like-btn--liked');
+        }, 2000);
+      });
     });
-  });
-}
-
+  }
 </script>
 {% endblock %}

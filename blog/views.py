@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from .models import Post, Category, Comment, Like, Wishlist 
 from .forms import CommentForm
+from django.urls import reverse
 
 def home(request):
     featured_posts = Post.objects.filter(
@@ -51,7 +52,7 @@ def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, status=Post.STATUS_PUBLISHED)
     post.view_count += 1
     post.save(update_fields=['view_count'])
-    comments = post.comments.filter(approved=True)
+    comments = post.comments.filter(approved=True, parent=None)
     comment_form = CommentForm()
     user_has_liked = post.is_liked_by(request.user)
     user_has_wishlisted = post.is_wishlisted_by(request.user)
@@ -167,3 +168,21 @@ def submit_story(request):
         form = StorySubmissionForm()
 
     return render(request, 'blog/submit_story.html', {'form': form})
+
+
+@login_required
+def add_reply(request, comment_id):
+    parent_comment = get_object_or_404(Comment, pk=comment_id)
+    if request.method == 'POST':
+        body = request.POST.get('body', '').strip()
+        if len(body) >= 3:
+            Comment.objects.create(
+                post=parent_comment.post,
+                author=request.user,
+                parent=parent_comment,
+                body=body,
+            )
+            messages.success(request, 'Reply posted!')
+        else:
+            messages.error(request, 'Reply is too short.')
+    return redirect(f"{reverse('blog:post_detail', kwargs={'slug': parent_comment.post.slug})}#comment-{parent_comment.pk}")
