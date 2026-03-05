@@ -25,3 +25,23 @@ class CommentForm(forms.ModelForm):
         if len(body) < 3:
             raise forms.ValidationError('Comment is too short.')
         return body
+
+class StorySubmissionForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your name'})
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your email address'})
+    )
+    destination = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g. Kyoto, Japan'})
+    )
+    pitch = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 5,
+            'placeholder': 'Tell us about your story — where did you go, what made it special?'
+        })
+    )

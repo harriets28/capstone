@@ -13,6 +13,7 @@ urlpatterns = [
     path('comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
     path('comments/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),
     path('about/', views.about, name='about'),
+    path('submit/', views.submit_story, name='submit_story'),
 ]
 
 from django.views.defaults import page_not_found

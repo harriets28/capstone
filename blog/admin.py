@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category, Comment, Like, UserProfile
+from .models import Post, Category, Comment, Like, UserProfile, StorySubmission
 
 
 @admin.register(Category)
@@ -31,3 +31,9 @@ class LikeAdmin(admin.ModelAdmin):
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'location']
+
+@admin.register(StorySubmission)
+class StorySubmissionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'destination', 'submitted_at', 'reviewed')
+    list_filter = ('reviewed',)
+    list_editable = ('reviewed',)

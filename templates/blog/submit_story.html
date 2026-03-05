@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Submit a Story — Wanderlust{% endblock %}
+
+{% block content %}
+
+<div class="post-list-header">
+  <div class="container px-4">
+    <p class="hero-label">Community</p>
+    <h1 class="post-list-title">Submit a Story</h1>
+    <p class="post-list-lead">Have a travel story worth sharing? We'd love to hear from you.</p>
+  </div>
+</div>
+
+<div class="container px-4">
+  <div class="submit-form-wrap">
+
+    <div class="submit-intro">
+      <p>Wanderlust is built on real stories from real travellers. If you've been somewhere that moved you, challenged you, or changed the way you see the world — tell us about it.</p>
+      <p>Fill in the form below and we'll be in touch if it's a good fit.</p>
+    </div>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="auth-field">
+        <label class="auth-label">Your Name</label>
+        {{ form.name }}
+        {% if form.name.errors %}<div class="auth-field-error">{{ form.name.errors }}</div>{% endif %}
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">Email Address</label>
+        {{ form.email }}
+        {% if form.email.errors %}<div class="auth-field-error">{{ form.email.errors }}</div>{% endif %}
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">Destination</label>
+        {{ form.destination }}
+        {% if form.destination.errors %}<div class="auth-field-error">{{ form.destination.errors }}</div>{% endif %}
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">Your Pitch</label>
+        {{ form.pitch }}
+        {% if form.pitch.errors %}<div class="auth-field-error">{{ form.pitch.errors }}</div>{% endif %}
+      </div>
+
+      <button type="submit" class="btn-primary mt-3">Send Submission</button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

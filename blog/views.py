@@ -147,3 +147,23 @@ def toggle_wishlist(request, slug):
         'wishlisted': wishlisted,
         'wishlist_count': post.wishlists.count(),
     })
+
+def submit_story(request):
+    from .forms import StorySubmissionForm
+    from .models import StorySubmission
+
+    if request.method == 'POST':
+        form = StorySubmissionForm(request.POST)
+        if form.is_valid():
+            StorySubmission.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                destination=form.cleaned_data['destination'],
+                pitch=form.cleaned_data['pitch'],
+            )
+            messages.success(request, 'Thanks for your submission! We\'ll be in touch.')
+            return redirect('blog:submit_story')
+    else:
+        form = StorySubmissionForm()
+
+    return render(request, 'blog/submit_story.html', {'form': form})

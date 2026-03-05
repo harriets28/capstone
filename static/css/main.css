@@ -1294,6 +1294,26 @@ h4 {
 }
 
 /* ============================================================
+   Story Submission Page
+   ============================================================ */
+.submit-form-wrap {
+    max-width: 640px;
+    padding: 2.5rem 0 5rem;
+}
+
+.submit-intro {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 55ch;
+}
+
+.submit-intro p {
+    margin-bottom: 0.75rem;
+}
+
+/* ============================================================
    Accessibility
    ============================================================ */
 :focus-visible {
