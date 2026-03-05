@@ -77,6 +77,12 @@ def post_detail(request, slug):
             comment.save()
             messages.success(request, 'Your comment has been posted!')
             return redirect('blog:post_detail', slug=slug)
+        
+    related_posts = Post.objects.filter(
+    status=Post.STATUS_PUBLISHED,
+    category=post.category
+    ).exclude(pk=post.pk)[:3]
+
 
     context = {
         'post': post,
@@ -84,6 +90,7 @@ def post_detail(request, slug):
         'comment_form': comment_form,
         'user_has_liked': user_has_liked,
         'user_has_wishlisted': user_has_wishlisted,
+        'related_posts': related_posts,
     }
     return render(request, 'blog/post_detail.html', context)
 

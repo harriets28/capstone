@@ -154,6 +154,7 @@
                     </div>
                     <p class="comment-text">{{ reply.body }}</p>
                    {% if user == reply.author %}
+
 <div class="comment-actions">
   <button class="comment-edit-toggle" onclick="toggleEditForm('reply-{{ reply.pk }}')">Edit</button>
   <form method="post" action="{% url 'blog:delete_comment' comment_id=reply.pk %}" class="d-inline">
@@ -206,6 +207,36 @@
 
     </section>
 
+    {% if related_posts %}
+<section class="related-posts">
+  <div class="section-header">
+    <h2 class="section-title">More from {{ post.category.name }}</h2>
+    <a href="{% url 'blog:post_list' %}?category={{ post.category.slug }}" class="section-link">View all</a>
+  </div>
+  <div class="stories-grid">
+    {% for related in related_posts %}
+    <article class="story-card">
+      <a href="{{ related.get_absolute_url }}">
+        {% if related.cover_image %}
+          <div class="story-card-img">
+            <img src="{{ related.cover_image }}" alt="{{ related.title }}" />
+          </div>
+        {% endif %}
+        <div class="story-card-body">
+          <p class="story-dest">📍 {{ related.destination }}</p>
+          <h3 class="story-title">{{ related.title }}</h3>
+          <p class="story-excerpt">{{ related.excerpt }}</p>
+          <div class="story-meta">
+            <span>❤️ {{ related.like_count }}</span>
+            <time>{{ related.created_at|date:"M j, Y" }}</time>
+          </div>
+        </div>
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
   </div> 
 </div>
 
