@@ -4,14 +4,16 @@
 
 {% block content %}
 
-<!-- Page Header -->
-<div class="post-list-header">
-  <div class="container px-4">
+<!-- Parallax Hero -->
+<section class="parallax-hero">
+  <div class="parallax-bg" id="parallax-bg" style="background-image: url('YOUR_PHOTO_URL_HERE');"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
     <p class="hero-label">Explore</p>
-    <h1 class="post-list-title">All Stories</h1>
-    <p class="post-list-lead">{{ posts|length }} stor{{ posts|length|pluralize:"y,ies" }} from around the world.</p>
+    <h1 class="hero-title">All Stories</h1>
+    <p class="hero-excerpt">{{ posts|length }} stor{{ posts|length|pluralize:"y,ies" }} from around the world.</p>
   </div>
-</div>
+</section>
 
 <!-- Search & Filter Bar -->
 <div class="category-bar">
