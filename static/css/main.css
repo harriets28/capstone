@@ -150,11 +150,22 @@ h4 {
    ============================================================ */
 .stories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.75rem;
     padding: 2rem 0;
 }
 
+@media (max-width: 900px) {
+    .stories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+}
 .story-card {
     background: var(--white);
     border: 1px solid var(--line);
@@ -1373,4 +1384,27 @@ h4 {
 
 .story-meta {
     margin-top: auto;
+}
+
+/* Post List Header */
+.post-list-header {
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    padding: 2rem 0 1.5rem;
+    margin-top: 0;
+}
+
+.post-list-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 900;
+    margin: 0.4rem 0 0.3rem;
+}
+
+.post-list-lead {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+    margin: 0;
 }

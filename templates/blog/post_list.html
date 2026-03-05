@@ -5,11 +5,11 @@
 {% block content %}
 
 <!-- Page Header -->
-<div class="post-header-section" style="padding: 3rem 0 2rem;">
+<div class="post-list-header">
   <div class="container px-4">
     <p class="hero-label">Explore</p>
-    <h1 class="post-title">All Stories</h1>
-    <p class="post-excerpt-lead">{{ posts|length }} stor{{ posts|length|pluralize:"y,ies" }} from around the world.</p>
+    <h1 class="post-list-title">All Stories</h1>
+    <p class="post-list-lead">{{ posts|length }} stor{{ posts|length|pluralize:"y,ies" }} from around the world.</p>
   </div>
 </div>
 
@@ -29,9 +29,9 @@
         <button type="submit" class="btn-primary" style="white-space: nowrap; padding: .6rem 1.25rem;">Search</button>
       </form>
       <div class="category-scroll" style="flex: 1;">
-        <a href="/posts/" class="category-pill {% if not request.GET.category %}category-pill--all{% endif %}">All</a>
+        <a href="{% url 'blog:post_list' %}" class="category-pill {% if not request.GET.category %}category-pill--all{% endif %}">All</a>
         {% for cat in categories %}
-          <a href="/posts/?category={{ cat.slug }}" class="category-pill {% if request.GET.category == cat.slug %}category-pill--all{% endif %}">{{ cat.name }}</a>
+          <a href="{% url 'blog:post_list' %}?category={{ cat.slug }}" class="category-pill {% if request.GET.category == cat.slug %}category-pill--all{% endif %}">{{ cat.name }}</a>
         {% endfor %}
       </div>
     </div>
@@ -51,6 +51,11 @@
       {% for post in posts %}
       <article class="story-card">
         <a href="{{ post.get_absolute_url }}">
+          {% if post.cover_image %}
+            <div class="story-card-img">
+              <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+            </div>
+          {% endif %}
           <div class="story-card-body">
             {% if post.category %}
               <span class="story-category-tag">{{ post.category.name }}</span>
@@ -71,7 +76,7 @@
   {% else %}
     <div class="empty-state">
       <p>No stories found{% if search_query %} for "{{ search_query }}"{% endif %}.</p>
-      <a href="/posts/" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Clear search</a>
+      <a href="{% url 'blog:post_list' %}" class="hero-btn" style="color: var(--ink); border-color: var(--ink);">Clear search</a>
     </div>
   {% endif %}
 </section>
