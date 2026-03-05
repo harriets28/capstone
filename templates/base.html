@@ -55,7 +55,7 @@
         </div>
         {% endif %}
 
-        <main>{% block content %}{% endblock %}</main>
+        <main class="{% block main_class %}{% endblock %}">{% block content %}{% endblock %}</main>
 
         <footer class="site-footer">
             <div class="container px-4">
@@ -91,20 +91,20 @@
         <!-- Back to top button -->
         <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="display:none; position:fixed; bottom:2rem; right:2rem; left:auto; width:44px; max-width:44px; height:44px; background:none; color:var(--terra); border:none; cursor:pointer; z-index:999; font-size:1.8rem;">↑</button>
 
-        <script>
-        // Back to top
-        const backToTop = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            backToTop.style.display = window.scrollY > 400 ? 'flex' : 'none';
-        });
+ <script>
+// Back to top
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 400 ? 'flex' : 'none';
+});
 
-        // Parallax effect — works on any page with id="parallax-bg"
-        const parallaxBg = document.getElementById('parallax-bg');
-        if (parallaxBg) {
-            window.addEventListener('scroll', () => {
-                parallaxBg.style.transform = `translateY(${window.scrollY * 0.4}px)`;
-            }, { passive: true });
-        }
-        </script>
+// Parallax effect
+const parallaxBg = document.getElementById('parallax-bg');
+if (parallaxBg) {
+    window.addEventListener('scroll', () => {
+        parallaxBg.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+    }, { passive: true });
+}
+</script>
     </body>
 </html>

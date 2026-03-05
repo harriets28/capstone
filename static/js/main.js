@@ -1,17 +1,13 @@
-// ---- Sticky nav shadow on scroll ----
+// ---- Nav scroll behaviour ----
 const nav = document.querySelector(".site-nav");
 if (nav) {
-    window.addEventListener(
-        "scroll",
-        () => {
-            if (window.scrollY > 10) {
-                nav.style.boxShadow = "0 2px 16px rgba(26,22,18,.08)";
-            } else {
-                nav.style.boxShadow = "none";
-            }
-        },
-        { passive: true },
-    );
+    function updateNav() {
+        nav.classList.toggle("scrolled", window.scrollY > 50);
+        nav.style.boxShadow =
+            window.scrollY > 10 ? "0 2px 16px rgba(26,22,18,.08)" : "none";
+    }
+    window.addEventListener("scroll", updateNav, { passive: true });
+    updateNav();
 }
 
 // ---- Auto-dismiss flash messages after 5 seconds ----
