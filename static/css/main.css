@@ -1411,6 +1411,42 @@ h4 {
 }
 
 /* ============================================================
+   Pagination
+   ============================================================ */
+.pagination-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0 4rem;
+}
+
+.pagination {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.page-btn {
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    background: var(--white);
+    transition: all 0.2s;
+}
+.page-btn:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+.page-btn--active {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: white;
+}
+
+/* ============================================================
    Accessibility
    ============================================================ */
 :focus-visible {

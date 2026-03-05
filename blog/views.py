@@ -26,6 +26,8 @@ def home(request):
 
 def post_list(request):
     from django.db.models import Q
+    from django.core.paginator import Paginator
+
     queryset = Post.objects.filter(status=Post.STATUS_PUBLISHED)
 
     search_query = request.GET.get('q', '')
@@ -40,8 +42,13 @@ def post_list(request):
     if category_slug:
         queryset = queryset.filter(category__slug=category_slug)
 
+    paginator = Paginator(queryset, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'posts': queryset,
+        'posts': page_obj,
+        'page_obj': page_obj,
         'categories': Category.objects.all(),
         'search_query': search_query,
     }
