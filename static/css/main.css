@@ -590,8 +590,9 @@ main.has-parallax-hero {
    ============================================================ */
 .post-header-section {
     background: var(--cream);
-    padding: 2.5rem 0 2rem;
+    padding: 1.5rem 0 2rem;
     border-bottom: 1px solid var(--line);
+    margin-top: 0;
 }
 
 .post-header-inner {
