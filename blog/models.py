@@ -133,6 +133,7 @@ class StorySubmission(models.Model):
     email = models.EmailField()
     destination = models.CharField(max_length=200)
     pitch = models.TextField()
+    photo_url = models.URLField(blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
     reviewed = models.BooleanField(default=False)
 

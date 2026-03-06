@@ -45,3 +45,10 @@ class StorySubmissionForm(forms.Form):
             'placeholder': 'Tell us about your story — where did you go, what made it special?'
         })
     )
+    photo_url = forms.URLField(
+    required=True,
+    widget=forms.URLInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'https://... (optional — a photo to accompany your story)'
+    })
+) 

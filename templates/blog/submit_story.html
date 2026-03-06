@@ -47,7 +47,14 @@
         {% if form.pitch.errors %}<div class="auth-field-error">{{ form.pitch.errors }}</div>{% endif %}
       </div>
 
-      <button type="submit" class="btn-primary mt-3">Send Submission</button>
+      <div class="auth-field">
+     <label class="auth-label">Photo URL</label>
+    {{ form.photo_url }}
+    {% if form.photo_url.errors %}<div class="auth-field-error">{{ form.photo_url.errors }}</div>{% endif %}
+    <span class="auth-help">Got a photo that captures your trip? Paste a link to it here.</span>
+    </div>
+
+ <button type="submit" class="btn-primary mt-3">Send Submission</button>
     </form>
 
   </div>

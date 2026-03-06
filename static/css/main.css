@@ -1227,7 +1227,7 @@ main.has-parallax-hero {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(26, 22, 18, 0.25);
+    background: rgba(26, 22, 18, 0.1);
     z-index: 1;
 }
 
