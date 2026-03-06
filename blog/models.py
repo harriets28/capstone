@@ -109,7 +109,7 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=100, blank=True)
     favourite_destination = models.CharField(max_length=100, blank=True)
     instagram = models.CharField(max_length=100, blank=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, max_length=500)
 
     def __str__(self):
         return f'Profile of {self.user.username}'
