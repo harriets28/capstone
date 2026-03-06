@@ -1,325 +1,515 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ post.title }} — Wanderlust{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}{{ post.title }} — Wanderlust{%
+endblock %} {% block content %}
 
 <div class="post-header-section">
-  <div class="container px-4">
-    <div class="post-header-inner">
-      {% if post.category %}
-        <a href="{{ post.category.get_absolute_url }}" class="hero-label">{{ post.category.name }}</a>
-      {% endif %}
-      <h1 class="post-title">{{ post.title }}</h1>
-      <p class="post-excerpt-lead">{{ post.excerpt }}</p>
-      <div class="post-byline">
-        <span>By <a href="{% url 'accounts:profile' post.author.username %}" class="byline-author-link"><strong>{{ post.author.username }}</strong></a></span>
-        <span class="byline-dot">·</span>
-        <time>{{ post.created_at|date:"F j, Y" }}</time>
-        <span class="byline-dot">·</span>
-        <span>📍 {{ post.destination }}</span>
-        <span class="byline-dot">·</span>
-        <span>👁 {{ post.view_count }} views</span>
-        <span class="byline-dot">·</span>
-        <a href="#like-btn" style="color: inherit;">❤️ <span id="byline-like-count">{{ post.like_count }}</span></a>
-        <span class="byline-dot">·</span>
-        <a href="#comments" style="color: inherit;">💬 {{ post.comment_count }}</a>
-      </div>
+    <div class="container px-4">
+        <div class="post-header-inner">
+            {% if post.category %}
+            <a href="{{ post.category.get_absolute_url }}" class="hero-label"
+                >{{ post.category.name }}</a
+            >
+            {% endif %}
+            <h1 class="post-title">{{ post.title }}</h1>
+            <p class="post-excerpt-lead">{{ post.excerpt }}</p>
+            <div class="post-byline">
+                <span
+                    >By
+                    <a
+                        href="{% url 'accounts:profile' post.author.username %}"
+                        class="byline-author-link"
+                        ><strong>{{ post.author.username }}</strong></a
+                    ></span
+                >
+                <span class="byline-dot">·</span>
+                <time>{{ post.created_at|date:"F j, Y" }}</time>
+                <span class="byline-dot">·</span>
+                <span>📍 {{ post.destination }}</span>
+                <span class="byline-dot">·</span>
+                <span>👁 {{ post.view_count }} views</span>
+                <span class="byline-dot">·</span>
+                <a href="#like-btn" style="color: inherit"
+                    >❤️
+                    <span id="byline-like-count">{{ post.like_count }}</span></a
+                >
+                <span class="byline-dot">·</span>
+                <a href="#comments" style="color: inherit"
+                    >💬 {{ post.comment_count }}</a
+                >
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 {% if post.cover_image %}
 <div class="post-cover-image">
-  <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+    <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
 </div>
 {% endif %}
 
 <div class="container px-4">
-  <div class="post-body-wrap">
+    <div class="post-body-wrap">
+        <div class="post-content">{{ post.content|safe }}</div>
 
-    <div class="post-content">
-      {{ post.content|linebreaks }}
-    </div>
+        <div class="like-wrap">
+            {% if user.is_authenticated %}
+            <button
+                id="like-btn"
+                class="like-btn {% if user_has_liked %}like-btn--liked{% endif %}"
+                data-url="{% url 'blog:toggle_like' slug=post.slug %}"
+            >
+                <span class="like-icon">❤️</span>
+                <span id="like-count">{{ post.like_count }}</span>
+                <span>{{ post.like_count|pluralize:"like,likes" }}</span>
+            </button>
+            {% else %}
+            <a href="{% url 'login' %}" class="like-btn like-btn--guest">
+                ❤️ {{ post.like_count }} likes — <span>sign in to like</span>
+            </a>
+            {% endif %}
+        </div>
 
-    <div class="like-wrap">
-      {% if user.is_authenticated %}
-        <button
-          id="like-btn"
-          class="like-btn {% if user_has_liked %}like-btn--liked{% endif %}"
-          data-url="{% url 'blog:toggle_like' slug=post.slug %}">
-          <span class="like-icon">❤️</span>
-          <span id="like-count">{{ post.like_count }}</span>
-          <span>{{ post.like_count|pluralize:"like,likes" }}</span>
-        </button>
-      {% else %}
-        <a href="{% url 'login' %}" class="like-btn like-btn--guest">
-          ❤️ {{ post.like_count }} likes — <span>sign in to like</span>
-        </a>
-      {% endif %}
-    </div>
+        <div class="like-wrap" style="border-top: none; padding-top: 0">
+            {% if user.is_authenticated %}
+            <button
+                id="wishlist-btn"
+                class="like-btn {% if user_has_wishlisted %}like-btn--liked{% endif %}"
+                data-url="{% url 'blog:toggle_wishlist' slug=post.slug %}"
+            >
+                <span>🗺️</span>
+                <span id="wishlist-text"
+                    >{% if user_has_wishlisted %}Saved to Wishlist{% else %}Add
+                    to Wishlist{% endif %}</span
+                >
+            </button>
+            {% else %}
+            <a href="{% url 'login' %}" class="like-btn like-btn--guest">
+                🗺️ <span>Sign in to save to wishlist</span>
+            </a>
+            {% endif %}
+        </div>
 
-    <div class="like-wrap" style="border-top: none; padding-top: 0;">
-      {% if user.is_authenticated %}
-        <button
-          id="wishlist-btn"
-          class="like-btn {% if user_has_wishlisted %}like-btn--liked{% endif %}"
-          data-url="{% url 'blog:toggle_wishlist' slug=post.slug %}">
-          <span>🗺️</span>
-          <span id="wishlist-text">{% if user_has_wishlisted %}Saved to Wishlist{% else %}Add to Wishlist{% endif %}</span>
-        </button>
-      {% else %}
-        <a href="{% url 'login' %}" class="like-btn like-btn--guest">
-          🗺️ <span>Sign in to save to wishlist</span>
-        </a>
-      {% endif %}
-    </div>
+        <div class="like-wrap" style="border-top: none; padding-top: 0">
+            <button id="share-btn" class="like-btn">
+                <span>🔗</span>
+                <span id="share-text">Share this story</span>
+            </button>
+        </div>
 
-    <div class="like-wrap" style="border-top: none; padding-top: 0;">
-      <button id="share-btn" class="like-btn">
-        <span>🔗</span>
-        <span id="share-text">Share this story</span>
-      </button>
-    </div>
+        <div class="author-card">
+            <div class="author-avatar">
+                {{ post.author.username|first|upper }}
+            </div>
+            <div class="author-info">
+                <p class="author-label">Written by</p>
+                <a
+                    href="{% url 'accounts:profile' username=post.author.username %}"
+                    class="author-name"
+                >
+                    {{ post.author.username }}
+                </a>
+                {% if post.author.profile.bio %}
+                <p class="author-bio">{{ post.author.profile.bio }}</p>
+                {% endif %}
+            </div>
+        </div>
 
-    <div class="author-card">
-      <div class="author-avatar">{{ post.author.username|first|upper }}</div>
-      <div class="author-info">
-        <p class="author-label">Written by</p>
-        <a href="{% url 'accounts:profile' username=post.author.username %}" class="author-name">
-          {{ post.author.username }}
-        </a>
-        {% if post.author.profile.bio %}
-          <p class="author-bio">{{ post.author.profile.bio }}</p>
-        {% endif %}
-      </div>
-    </div>
+        <section class="comments-section" id="comments">
+            <h2 class="comments-title">
+                {{ post.comment_count }} Comment{{ post.comment_count|pluralize
+                }}
+            </h2>
 
-    <section class="comments-section" id="comments">
-      <h2 class="comments-title">{{ post.comment_count }} Comment{{ post.comment_count|pluralize }}</h2>
-
-      {% if comments %}
-        <div class="comments-list">
-          {% for comment in comments %}
-          <div class="comment" id="comment-{{ comment.pk }}">
-            <div class="comment-avatar">{{ comment.author.username|first|upper }}</div>
-            <div class="comment-body">
-              <div class="comment-header">
-                <a href="{% url 'accounts:profile' comment.author.username %}" class="comment-author comment-author-link">{{ comment.author.username }}</a>
-                <time class="comment-time">{{ comment.created_at|date:"M j, Y" }}</time>
-              </div>
-              <p class="comment-text">{{ comment.body }}</p>
-
-              {% if user == comment.author %}
-              <div class="comment-actions">
-                <button class="comment-edit-toggle" onclick="toggleEditForm({{ comment.pk }})">Edit</button>
-                <form method="post" action="{% url 'blog:delete_comment' comment_id=comment.pk %}" class="d-inline">
-                  {% csrf_token %}
-                  <button type="submit" class="comment-delete" onclick="return confirm('Delete this comment?')">Delete</button>
-                </form>
-              </div>
-              <div class="comment-edit-form" id="edit-form-{{ comment.pk }}" style="display:none;">
-                <form method="post" action="{% url 'blog:edit_comment' comment_id=comment.pk %}">
-                  {% csrf_token %}
-                  <textarea class="form-control mt-2" name="body" rows="3">{{ comment.body }}</textarea>
-                  <div class="d-flex gap-2 mt-2">
-                    <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
-                    <button type="button" class="comment-delete" onclick="toggleEditForm({{ comment.pk }})">Cancel</button>
-                  </div>
-                </form>
-              </div>
-              {% endif %}
-
-              {% if user.is_authenticated %}
-              <button class="comment-reply-toggle" onclick="toggleReplyForm({{ comment.pk }})">↩ Reply</button>
-              <div class="reply-form" id="reply-form-{{ comment.pk }}" style="display:none;">
-                <form method="post" action="{% url 'blog:add_reply' comment_id=comment.pk %}">
-                  {% csrf_token %}
-                  <textarea class="form-control mt-2" name="body" rows="2" placeholder="Write a reply..."></textarea>
-                  <div class="d-flex gap-2 mt-2">
-                    <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Post Reply</button>
-                    <button type="button" class="comment-delete" onclick="toggleReplyForm({{ comment.pk }})">Cancel</button>
-                  </div>
-                </form>
-              </div>
-              {% endif %}
-
-              {% if comment.replies.all %}
-              <div class="replies-list">
-                {% for reply in comment.replies.all %}
-                <div class="comment reply" id="comment-{{ reply.pk }}">
-                  <div class="comment-avatar" style="width:30px; height:30px; font-size:0.75rem;">{{ reply.author.username|first|upper }}</div>
-                  <div class="comment-body">
-                    <div class="comment-header">
-                      <a href="{% url 'accounts:profile' reply.author.username %}" class="comment-author comment-author-link">{{ reply.author.username }}</a>
-                      <time class="comment-time">{{ reply.created_at|date:"M j, Y" }}</time>
+            {% if comments %}
+            <div class="comments-list">
+                {% for comment in comments %}
+                <div class="comment" id="comment-{{ comment.pk }}">
+                    <div class="comment-avatar">
+                        {{ comment.author.username|first|upper }}
                     </div>
-                    <p class="comment-text">{{ reply.body }}</p>
-                   {% if user == reply.author %}
+                    <div class="comment-body">
+                        <div class="comment-header">
+                            <a
+                                href="{% url 'accounts:profile' comment.author.username %}"
+                                class="comment-author comment-author-link"
+                                >{{ comment.author.username }}</a
+                            >
+                            <time class="comment-time"
+                                >{{ comment.created_at|date:"M j, Y" }}</time
+                            >
+                        </div>
+                        <p class="comment-text">{{ comment.body }}</p>
 
-<div class="comment-actions">
-  <button class="comment-edit-toggle" onclick="toggleEditForm('reply-{{ reply.pk }}')">Edit</button>
-  <form method="post" action="{% url 'blog:delete_comment' comment_id=reply.pk %}" class="d-inline">
-    {% csrf_token %}
-    <button type="submit" class="comment-delete" onclick="return confirm('Delete this reply?')">Delete</button>
-  </form>
-</div>
-                    <div class="comment-edit-form" id="edit-form-reply-{{ reply.pk }}" style="display:none;">
-  <form method="post" action="{% url 'blog:edit_comment' comment_id=reply.pk %}">
-    {% csrf_token %}
-    <textarea class="form-control mt-2" name="body" rows="2">{{ reply.body }}</textarea>
-    <div class="d-flex gap-2 mt-2">
-      <button type="submit" class="btn-primary" style="padding: .4rem 1rem; font-size: .8rem;">Save</button>
-      <button type="button" class="comment-delete" onclick="toggleEditForm('reply-{{ reply.pk }}')">Cancel</button>
-    </div>
-  </form>
-</div>
-                    {% endif %}
-                  </div>
+                        {% if user == comment.author %}
+                        <div class="comment-actions">
+                            <button
+                                class="comment-edit-toggle"
+                                onclick="toggleEditForm({{ comment.pk }})"
+                            >
+                                Edit
+                            </button>
+                            <form
+                                method="post"
+                                action="{% url 'blog:delete_comment' comment_id=comment.pk %}"
+                                class="d-inline"
+                            >
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="comment-delete"
+                                    onclick="
+                                        return confirm('Delete this comment?');
+                                    "
+                                >
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                        <div
+                            class="comment-edit-form"
+                            id="edit-form-{{ comment.pk }}"
+                            style="display: none"
+                        >
+                            <form
+                                method="post"
+                                action="{% url 'blog:edit_comment' comment_id=comment.pk %}"
+                            >
+                                {% csrf_token %}
+                                <textarea
+                                    class="form-control mt-2"
+                                    name="body"
+                                    rows="3"
+                                >
+{{ comment.body }}</textarea
+                                >
+                                <div class="d-flex gap-2 mt-2">
+                                    <button
+                                        type="submit"
+                                        class="btn-primary"
+                                        style="
+                                            padding: 0.4rem 1rem;
+                                            font-size: 0.8rem;
+                                        "
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="comment-delete"
+                                        onclick="toggleEditForm({{ comment.pk }})"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %} {% if user.is_authenticated %}
+                        <button
+                            class="comment-reply-toggle"
+                            onclick="toggleReplyForm({{ comment.pk }})"
+                        >
+                            ↩ Reply
+                        </button>
+                        <div
+                            class="reply-form"
+                            id="reply-form-{{ comment.pk }}"
+                            style="display: none"
+                        >
+                            <form
+                                method="post"
+                                action="{% url 'blog:add_reply' comment_id=comment.pk %}"
+                            >
+                                {% csrf_token %}
+                                <textarea
+                                    class="form-control mt-2"
+                                    name="body"
+                                    rows="2"
+                                    placeholder="Write a reply..."
+                                ></textarea>
+                                <div class="d-flex gap-2 mt-2">
+                                    <button
+                                        type="submit"
+                                        class="btn-primary"
+                                        style="
+                                            padding: 0.4rem 1rem;
+                                            font-size: 0.8rem;
+                                        "
+                                    >
+                                        Post Reply
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="comment-delete"
+                                        onclick="toggleReplyForm({{ comment.pk }})"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %} {% if comment.replies.all %}
+                        <div class="replies-list">
+                            {% for reply in comment.replies.all %}
+                            <div
+                                class="comment reply"
+                                id="comment-{{ reply.pk }}"
+                            >
+                                <div
+                                    class="comment-avatar"
+                                    style="
+                                        width: 30px;
+                                        height: 30px;
+                                        font-size: 0.75rem;
+                                    "
+                                >
+                                    {{ reply.author.username|first|upper }}
+                                </div>
+                                <div class="comment-body">
+                                    <div class="comment-header">
+                                        <a
+                                            href="{% url 'accounts:profile' reply.author.username %}"
+                                            class="comment-author comment-author-link"
+                                            >{{ reply.author.username }}</a
+                                        >
+                                        <time class="comment-time"
+                                            >{{ reply.created_at|date:"M j, Y"
+                                            }}</time
+                                        >
+                                    </div>
+                                    <p class="comment-text">{{ reply.body }}</p>
+                                    {% if user == reply.author %}
+
+                                    <div class="comment-actions">
+                                        <button
+                                            class="comment-edit-toggle"
+                                            onclick="toggleEditForm('reply-{{ reply.pk }}')"
+                                        >
+                                            Edit
+                                        </button>
+                                        <form
+                                            method="post"
+                                            action="{% url 'blog:delete_comment' comment_id=reply.pk %}"
+                                            class="d-inline"
+                                        >
+                                            {% csrf_token %}
+                                            <button
+                                                type="submit"
+                                                class="comment-delete"
+                                                onclick="
+                                                    return confirm(
+                                                        'Delete this reply?',
+                                                    );
+                                                "
+                                            >
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div
+                                        class="comment-edit-form"
+                                        id="edit-form-reply-{{ reply.pk }}"
+                                        style="display: none"
+                                    >
+                                        <form
+                                            method="post"
+                                            action="{% url 'blog:edit_comment' comment_id=reply.pk %}"
+                                        >
+                                            {% csrf_token %}
+                                            <textarea
+                                                class="form-control mt-2"
+                                                name="body"
+                                                rows="2"
+                                            >
+{{ reply.body }}</textarea
+                                            >
+                                            <div class="d-flex gap-2 mt-2">
+                                                <button
+                                                    type="submit"
+                                                    class="btn-primary"
+                                                    style="
+                                                        padding: 0.4rem 1rem;
+                                                        font-size: 0.8rem;
+                                                    "
+                                                >
+                                                    Save
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    class="comment-delete"
+                                                    onclick="toggleEditForm('reply-{{ reply.pk }}')"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endfor %}
-              </div>
-              {% endif %}
-
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      {% else %}
-        <p class="no-comments">No comments yet — be the first to share your thoughts.</p>
-      {% endif %}
-
-      {% if user.is_authenticated %}
-        <div class="comment-form-wrap">
-          <h3 class="comment-form-title">Leave a Comment</h3>
-          <form method="post" action="{{ request.path }}#comments">
-            {% csrf_token %}
-            {{ comment_form.body }}
-            {% if comment_form.body.errors %}
-              <div class="text-danger small mt-1">{{ comment_form.body.errors }}</div>
+            {% else %}
+            <p class="no-comments">
+                No comments yet — be the first to share your thoughts.
+            </p>
+            {% endif %} {% if user.is_authenticated %}
+            <div class="comment-form-wrap">
+                <h3 class="comment-form-title">Leave a Comment</h3>
+                <form method="post" action="{{ request.path }}#comments">
+                    {% csrf_token %} {{ comment_form.body }} {% if
+                    comment_form.body.errors %}
+                    <div class="text-danger small mt-1">
+                        {{ comment_form.body.errors }}
+                    </div>
+                    {% endif %}
+                    <button type="submit" class="btn-primary mt-3">
+                        Post Comment
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <p class="comment-login-prompt">
+                <a href="{% url 'login' %}?next={{ request.path }}">Sign in</a>
+                to leave a comment.
+            </p>
             {% endif %}
-            <button type="submit" class="btn-primary mt-3">Post Comment</button>
-          </form>
-        </div>
-      {% else %}
-        <p class="comment-login-prompt">
-          <a href="{% url 'login' %}?next={{ request.path }}">Sign in</a> to leave a comment.
-        </p>
-      {% endif %}
+        </section>
 
-    </section>
-
-    {% if related_posts %}
-<section class="related-posts">
-  <div class="section-header">
-    <h2 class="section-title">More from {{ post.category.name }}</h2>
-    <a href="{% url 'blog:post_list' %}?category={{ post.category.slug }}" class="section-link">View all</a>
-  </div>
-  <div class="stories-grid">
-    {% for related in related_posts %}
-    <article class="story-card">
-      <a href="{{ related.get_absolute_url }}">
-        {% if related.cover_image %}
-          <div class="story-card-img">
-            <img src="{{ related.cover_image }}" alt="{{ related.title }}" />
-          </div>
+        {% if related_posts %}
+        <section class="related-posts">
+            <div class="section-header">
+                <h2 class="section-title">
+                    More from {{ post.category.name }}
+                </h2>
+                <a
+                    href="{% url 'blog:post_list' %}?category={{ post.category.slug }}"
+                    class="section-link"
+                    >View all</a
+                >
+            </div>
+            <div class="stories-grid">
+                {% for related in related_posts %}
+                <article class="story-card">
+                    <a href="{{ related.get_absolute_url }}">
+                        {% if related.cover_image %}
+                        <div class="story-card-img">
+                            <img
+                                src="{{ related.cover_image }}"
+                                alt="{{ related.title }}"
+                            />
+                        </div>
+                        {% endif %}
+                        <div class="story-card-body">
+                            <p class="story-dest">
+                                📍 {{ related.destination }}
+                            </p>
+                            <h3 class="story-title">{{ related.title }}</h3>
+                            <p class="story-excerpt">{{ related.excerpt }}</p>
+                            <div class="story-meta">
+                                <span>❤️ {{ related.like_count }}</span>
+                                <time
+                                    >{{ related.created_at|date:"M j, Y"
+                                    }}</time
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
         {% endif %}
-        <div class="story-card-body">
-          <p class="story-dest">📍 {{ related.destination }}</p>
-          <h3 class="story-title">{{ related.title }}</h3>
-          <p class="story-excerpt">{{ related.excerpt }}</p>
-          <div class="story-meta">
-            <span>❤️ {{ related.like_count }}</span>
-            <time>{{ related.created_at|date:"M j, Y" }}</time>
-          </div>
-        </div>
-      </a>
-    </article>
-    {% endfor %}
-  </div>
-</section>
-{% endif %}
-  </div> 
+    </div>
 </div>
 
-{% endblock %}
-
-{% block extra_js %}
+{% endblock %} {% block extra_js %}
 <script>
-  const likeBtn = document.getElementById('like-btn');
-  if (likeBtn) {
-    likeBtn.addEventListener('click', async () => {
-      const url = likeBtn.dataset.url;
-      const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'X-CSRFToken': csrf, 'Content-Type': 'application/json' },
+    const likeBtn = document.getElementById("like-btn");
+    if (likeBtn) {
+        likeBtn.addEventListener("click", async () => {
+            const url = likeBtn.dataset.url;
+            const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || "";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrf,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const countEl = document.getElementById("like-count");
+                const bylineLikeCount =
+                    document.getElementById("byline-like-count");
+                if (data.liked) {
+                    likeBtn.classList.add("like-btn--liked");
+                } else {
+                    likeBtn.classList.remove("like-btn--liked");
+                }
+                countEl.textContent = data.like_count;
+                if (bylineLikeCount)
+                    bylineLikeCount.textContent = data.like_count;
+            } catch (err) {
+                console.error("Like toggle failed:", err);
+            }
         });
-        const data = await response.json();
-        const countEl = document.getElementById('like-count');
-        const bylineLikeCount = document.getElementById('byline-like-count');
-        if (data.liked) {
-          likeBtn.classList.add('like-btn--liked');
-        } else {
-          likeBtn.classList.remove('like-btn--liked');
-        }
-        countEl.textContent = data.like_count;
-        if (bylineLikeCount) bylineLikeCount.textContent = data.like_count;
-      } catch (err) {
-        console.error('Like toggle failed:', err);
-      }
-    });
-  }
+    }
 
-  const wishlistBtn = document.getElementById('wishlist-btn');
-  if (wishlistBtn) {
-    wishlistBtn.addEventListener('click', async () => {
-      const url = wishlistBtn.dataset.url;
-      const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'X-CSRFToken': csrf, 'Content-Type': 'application/json' },
+    const wishlistBtn = document.getElementById("wishlist-btn");
+    if (wishlistBtn) {
+        wishlistBtn.addEventListener("click", async () => {
+            const url = wishlistBtn.dataset.url;
+            const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || "";
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrf,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const textEl = document.getElementById("wishlist-text");
+                if (data.wishlisted) {
+                    wishlistBtn.classList.add("like-btn--liked");
+                    textEl.textContent = "Saved to Wishlist";
+                } else {
+                    wishlistBtn.classList.remove("like-btn--liked");
+                    textEl.textContent = "Add to Wishlist";
+                }
+            } catch (err) {
+                console.error("Wishlist toggle failed:", err);
+            }
         });
-        const data = await response.json();
-        const textEl = document.getElementById('wishlist-text');
-        if (data.wishlisted) {
-          wishlistBtn.classList.add('like-btn--liked');
-          textEl.textContent = 'Saved to Wishlist';
-        } else {
-          wishlistBtn.classList.remove('like-btn--liked');
-          textEl.textContent = 'Add to Wishlist';
-        }
-      } catch (err) {
-        console.error('Wishlist toggle failed:', err);
-      }
-    });
-  }
+    }
 
-  function toggleEditForm(commentId) {
-    const form = document.getElementById('edit-form-' + commentId);
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-  }
+    function toggleEditForm(commentId) {
+        const form = document.getElementById("edit-form-" + commentId);
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
 
-  function toggleReplyForm(commentId) {
-    const form = document.getElementById('reply-form-' + commentId);
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-  }
+    function toggleReplyForm(commentId) {
+        const form = document.getElementById("reply-form-" + commentId);
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
 
-  const shareBtn = document.getElementById('share-btn');
-  if (shareBtn) {
-    shareBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        const textEl = document.getElementById('share-text');
-        textEl.textContent = 'Link copied!';
-        shareBtn.classList.add('like-btn--liked');
-        setTimeout(() => {
-          textEl.textContent = 'Share this story';
-          shareBtn.classList.remove('like-btn--liked');
-        }, 2000);
-      });
-    });
-  }
+    const shareBtn = document.getElementById("share-btn");
+    if (shareBtn) {
+        shareBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const textEl = document.getElementById("share-text");
+                textEl.textContent = "Link copied!";
+                shareBtn.classList.add("like-btn--liked");
+                setTimeout(() => {
+                    textEl.textContent = "Share this story";
+                    shareBtn.classList.remove("like-btn--liked");
+                }, 2000);
+            });
+        });
+    }
 </script>
 {% endblock %}
