@@ -565,6 +565,33 @@ main.has-parallax-hero {
     color: white;
 }
 
+.category-bar-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-bar-inner .category-scroll {
+    flex: 1;
+    min-width: 0;
+}
+
+.category-bar-inner form {
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .category-bar-inner {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .category-bar-inner form {
+        width: 100%;
+    }
+}
+
 /* ============================================================
    Post List Page
    ============================================================ */
@@ -1667,7 +1694,6 @@ main.has-parallax-hero {
     outline: 2px solid var(--terra);
     outline-offset: 3px;
 }
-
 /* ============================================================
    Responsive
    ============================================================ */
@@ -1678,6 +1704,9 @@ main.has-parallax-hero {
 }
 
 @media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
     .nav-links {
         display: none;
     }
@@ -1751,13 +1780,84 @@ main.has-parallax-hero {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
+.community-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.community-location {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+}
+
+.community-bio {
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.community-stats {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    text-align: center;
+}
+
+/* Author link on post cards */
+.story-author {
+    padding: 0 1.25rem 1rem;
+    margin-top: -0.25rem;
+}
+
+.story-author-link {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.story-author-link:hover {
+    color: var(--terra);
+}
+
+/* Byline author link */
 .byline-author-link {
     color: inherit;
     text-decoration: none;
 }
 
 .byline-author-link:hover {
+    color: var(--terra);
+}
+
+/* Comment author links */
+.comment-author-link {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.comment-author-link:hover {
     color: var(--terra);
 }
