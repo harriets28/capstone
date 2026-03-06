@@ -42,19 +42,6 @@
 </section>
 {% endif %}
 
-<!-- Category Pills -->
-{% if categories %}
-<div class="category-bar">
-  <div class="container px-4">
-    <div class="category-scroll">
-      <a href="{% url 'blog:post_list' %}" class="category-pill category-pill--all">All Destinations</a>
-      {% for cat in categories %}
-        <a href="{% url 'blog:post_list' %}?category={{ cat.slug }}" class="category-pill">{{ cat.name }}</a>
-      {% endfor %}
-    </div>
-  </div>
-</div>
-{% endif %}
 
 <!-- Recent Stories -->
 <section class="container px-4 pb-5">
