@@ -318,6 +318,11 @@ h4 {
     transform: scale(1.03);
 }
 
+.story-author {
+    padding: 0 1.25rem 1rem;
+    margin-top: -0.25rem;
+}
+
 /* ============================================================
    Section Header
    ============================================================ */
@@ -915,6 +920,18 @@ main.has-parallax-hero {
 
 .reply-form {
     margin-top: 0.5rem;
+}
+
+/* Comment author links */
+.comment-author-link {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.comment-author-link:hover {
+    color: var(--terra);
 }
 
 /* ============================================================
@@ -1683,4 +1700,64 @@ main.has-parallax-hero {
     .stories-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ============================================================
+   Community Page
+   ============================================================ */
+.community-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 2rem 1.5rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition:
+        box-shadow 0.25s,
+        transform 0.25s;
+}
+
+.community-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    color: var(--ink);
+}
+
+.community-avatar-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.community-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.community-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--terra);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.byline-author-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.byline-author-link:hover {
+    color: var(--terra);
 }

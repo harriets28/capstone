@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Community — Wanderlust{% endblock %}
+
+{% block content %}
+
+<section class="container px-4 py-5">
+  <div class="mb-5">
+    <p class="hero-label">People</p>
+    <h1 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 0.5rem;">Our Contributors</h1>
+    <p style="color: var(--muted); font-family: var(--font-ui);">The writers and explorers behind the stories.</p>
+  </div>
+
+  <div class="stories-grid">
+    {% for member in community %}
+    <a href="{% url 'accounts:profile' member.user.username %}" class="community-card">
+      <div class="community-avatar">
+        {% if member.user.profile.avatar %}
+          <img src="{{ member.user.profile.avatar }}" alt="{{ member.user.username }}" />
+        {% else %}
+          <div class="community-avatar-placeholder">{{ member.user.username|first|upper }}</div>
+        {% endif %}
+      </div>
+      <div class="community-info">
+        <h3 class="community-name">{{ member.user.username }}</h3>
+        {% if member.user.profile.location %}
+          <p class="community-location">📍 {{ member.user.profile.location }}</p>
+        {% endif %}
+        {% if member.user.profile.bio %}
+          <p class="community-bio">{{ member.user.profile.bio|truncatechars:80 }}</p>
+        {% endif %}
+        <p class="community-stats">{{ member.post_count }} stor{{ member.post_count|pluralize:"y,ies" }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

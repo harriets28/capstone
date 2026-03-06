@@ -53,28 +53,33 @@
   {% if posts %}
     <div class="stories-grid">
       {% for post in posts %}
-      <article class="story-card">
-        <a href="{{ post.get_absolute_url }}">
-          {% if post.cover_image %}
-            <div class="story-card-img">
-              <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
-            </div>
-          {% endif %}
-          <div class="story-card-body">
-            {% if post.category %}
-              <span class="story-category-tag">{{ post.category.name }}</span>
-            {% endif %}
-            <p class="story-dest">📍 {{ post.destination }}</p>
-            <h3 class="story-title">{{ post.title }}</h3>
-            <p class="story-excerpt">{{ post.excerpt }}</p>
-            <div class="story-meta">
-              <span>❤️ {{ post.like_count }}</span>
-              <span>💬 {{ post.comment_count }}</span>
-              <time>{{ post.created_at|date:"M j, Y" }}</time>
-            </div>
-          </div>
-        </a>
-      </article>
+    <article class="story-card">
+  <a href="{{ post.get_absolute_url }}">
+    {% if post.cover_image %}
+      <div class="story-card-img">
+        <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+      </div>
+    {% endif %}
+    <div class="story-card-body">
+      {% if post.category %}
+        <span class="story-category-tag">{{ post.category.name }}</span>
+      {% endif %}
+      <p class="story-dest">📍 {{ post.destination }}</p>
+      <h3 class="story-title">{{ post.title }}</h3>
+      <p class="story-excerpt">{{ post.excerpt }}</p>
+      <div class="story-meta">
+        <span>❤️ {{ post.like_count }}</span>
+        <span>💬 {{ post.comment_count }}</span>
+        <time>{{ post.created_at|date:"M j, Y" }}</time>
+      </div>
+    </div>
+  </a>
+  <div class="story-author">
+    <a href="{% url 'accounts:profile' post.author.username %}" class="story-author-link">
+      ✍️ {{ post.author.username }}
+    </a>
+  </div>
+</article>
       {% endfor %}
     </div>
   {% else %}

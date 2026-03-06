@@ -72,3 +72,17 @@ def edit_profile(request):
         form = ProfileUpdateForm(instance=request.user.profile)
 
     return render(request, 'accounts/edit_profile.html', {'form': form})
+
+@login_required
+def community_view(request):
+    users = User.objects.filter(
+    is_active=True,
+    posts__status='published'
+    ).distinct().select_related('profile').order_by('username')
+    community = []
+    for user in users:
+        community.append({
+            'user': user,
+            'post_count': user.posts.filter(status='published').count(),
+        })
+    return render(request, 'accounts/community.html', {'community': community})
