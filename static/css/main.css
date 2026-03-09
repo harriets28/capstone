@@ -672,14 +672,6 @@ main.has-parallax-hero {
     overflow: hidden;
 }
 
-.post-cover-image img {
-    width: 100%;
-    height: 620px;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-}
-
 .post-cover-image .carousel,
 .post-cover-image .carousel-inner,
 .post-cover-image .carousel-item {
@@ -689,8 +681,9 @@ main.has-parallax-hero {
 
 .post-cover-image .carousel-item img {
     width: 100%;
-    height: 620px;
+    height: 620px !important;
     object-fit: cover;
+    object-position: center center;
     display: block;
 }
 
