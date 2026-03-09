@@ -684,6 +684,7 @@ main.has-parallax-hero {
 .post-cover-image .carousel-inner,
 .post-cover-image .carousel-item {
     height: 620px;
+    overflow: hidden;
 }
 
 .post-cover-image .carousel-item img {
