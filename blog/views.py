@@ -164,15 +164,22 @@ def toggle_wishlist(request, slug):
 def submit_story(request):
     from .forms import StorySubmissionForm
     from .models import StorySubmission
+    import cloudinary.uploader
 
     if request.method == 'POST':
-        form = StorySubmissionForm(request.POST)
+        form = StorySubmissionForm(request.POST, request.FILES)  # add request.FILES
         if form.is_valid():
+            photo_url = ''
+            if form.cleaned_data.get('photo'):
+                result = cloudinary.uploader.upload(form.cleaned_data['photo'])
+                photo_url = result['secure_url']
+
             StorySubmission.objects.create(
                 name=form.cleaned_data['name'],
                 email=form.cleaned_data['email'],
                 destination=form.cleaned_data['destination'],
                 pitch=form.cleaned_data['pitch'],
+                photo_url=photo_url,
             )
             messages.success(request, 'Thanks for your submission! We\'ll be in touch.')
             return redirect('blog:submit_story')
