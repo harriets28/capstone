@@ -42,6 +42,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     featured = models.BooleanField(default=False)
     cover_image = models.URLField(blank=True)
+    cover_image_2 = models.URLField(blank=True)
+    cover_image_3 = models.URLField(blank=True)
     view_count = models.PositiveIntegerField(default=0)
 
     class Meta:

@@ -45,7 +45,58 @@
 
 {% if post.cover_image %}
 <div class="post-cover-image">
-    <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+  {% if post.cover_image_2 or post.cover_image_3 %}
+  <!-- Carousel: multiple images -->
+  <div id="postCarousel" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#postCarousel" data-bs-slide-to="0"
+        class="active" aria-current="true" aria-label="Slide 1"></button>
+      {% if post.cover_image_2 %}
+      <button type="button" data-bs-target="#postCarousel" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      {% endif %}
+      {% if post.cover_image_3 %}
+      <button type="button" data-bs-target="#postCarousel" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+      {% endif %}
+    </div>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{ post.cover_image }}" class="d-block w-100" alt="{{ post.title }}" />
+      </div>
+      {% if post.cover_image_2 %}
+      <div class="carousel-item">
+        <img src="{{ post.cover_image_2 }}" class="d-block w-100" alt="{{ post.title }}" />
+      </div>
+      {% endif %}
+      {% if post.cover_image_3 %}
+      <div class="carousel-item">
+        <img src="{{ post.cover_image_3 }}" class="d-block w-100" alt="{{ post.title }}" />
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button"
+      data-bs-target="#postCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button"
+      data-bs-target="#postCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  {% else %}
+  <!-- Single image, no carousel -->
+  <img src="{{ post.cover_image }}" alt="{{ post.title }}" />
+  {% endif %}
 </div>
 {% endif %}
 
