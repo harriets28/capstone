@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from .models import Post, Category, Comment, Like, Wishlist 
 from .forms import CommentForm
 from django.urls import reverse
+from django.contrib.auth import logout
 
 def home(request):
     all_published = Post.objects.filter(status=Post.STATUS_PUBLISHED)
@@ -197,3 +198,13 @@ def add_reply(request, comment_id):
         else:
             messages.error(request, 'Reply is too short.')
     return redirect(f"{reverse('blog:post_detail', kwargs={'slug': parent_comment.post.slug})}#comment-{parent_comment.pk}")
+
+@login_required
+def delete_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, 'Your account has been deleted.')
+        return redirect('blog:home')
+    return render(request, 'blog/delete_profile.html')

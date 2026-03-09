@@ -55,7 +55,10 @@
 
       {% if user == profile_user %}
         <a href="{% url 'accounts:edit_profile' %}" class="profile-edit-btn">Edit Profile</a>
-      {% endif %}
+        <button onclick="document.getElementById('delete-modal').style.display='flex'" class="comment-delete" style="margin-top: 0.75rem;">
+    Delete Account
+    </button>
+    {% endif %}
     </div>
   </div>
 </div>
@@ -150,6 +153,23 @@
     </div>
   {% endif %}
 
+</div>
+
+/* Delete Account Modal * /
+<div id="delete-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:#fff; padding:2rem; border-radius:8px; max-width:400px; width:90%; text-align:center;">
+    <h3 style="margin-bottom:0.5rem;">Delete your account?</h3>
+    <p style="color:#666; margin-bottom:1.5rem;">This will permanently delete your profile, posts, comments, and wishlist. This cannot be undone.</p>
+    <div class="d-flex gap-2" style="justify-content:center;">
+      <form method="POST" action="{% url 'blog:delete_profile' %}">
+        {% csrf_token %}
+        <button type="submit" class="comment-delete">Yes, delete my account</button>
+      </form>
+      <button onclick="document.getElementById('delete-modal').style.display='none'" class="comment-edit-toggle">
+        Cancel
+      </button>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
